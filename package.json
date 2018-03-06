@@ -1,0 +1,22 @@
+{
+  "name": "usp-web-viewer",
+  "version": "1.0.0",
+  "description": "usp web viewer for TUM architecturial informaitcs chair",
+  "main": "index.js",
+  "repository": "https://github.com/mshoaib91/usp-web-viewer.git",
+  "author": "Shoaib Khan <mshoaibkhan91@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "three": "^0.90.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jshint": "^2.9.5",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10"
+  }
+}
