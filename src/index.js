@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 // Our Javascript will go here.
 var scene = new THREE.Scene();

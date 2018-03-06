@@ -6,6 +6,9 @@
   "repository": "https://github.com/mshoaib91/usp-web-viewer.git",
   "author": "Shoaib Khan <mshoaibkhan91@gmail.com>",
   "license": "GPL-3.0",
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
     "three": "^0.90.0"
   },
