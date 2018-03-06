@@ -7,7 +7,8 @@
   "author": "Shoaib Khan <mshoaibkhan91@gmail.com>",
   "license": "GPL-3.0",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development"
   },
   "dependencies": {
     "three": "^0.90.0"
