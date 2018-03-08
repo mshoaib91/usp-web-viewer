@@ -11,9 +11,15 @@
     "dev": "webpack --mode development"
   },
   "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "three": "^0.90.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-node": "^6.0.1",
