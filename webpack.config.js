@@ -15,5 +15,9 @@ module.exports = {
             loader: "babel-loader"
         }
     ]
+  },
+  /** webpack-dev-server configurations */
+  devServer: {
+    publicPath : "/dist/"
   }
 };
