@@ -48,6 +48,7 @@ module.exports = {
     ],
     "space-infix-ops": [
       "error"
-    ]
+    ],
+    "no-console": 0
   }
 };
