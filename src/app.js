@@ -11,6 +11,7 @@ sc.LoadModel('../sample.obj')
   .catch((err) => {
     console.log('failed to load object', err);
   });
+sc.addControls();
 sc.initRender();
 
 const animate = () => {

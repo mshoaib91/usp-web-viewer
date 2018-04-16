@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import OBJLoader from 'three-obj-loader';
+import OrbitControls from 'three-orbit-controls';
 OBJLoader(THREE);
+var OC = OrbitControls(THREE);
 
 import ObjModelLoader from './Loaders/ObjModelLoader';
 
@@ -31,6 +33,10 @@ class SceneCreator {
 
   addObjToScene(obj) {
     this.scene.add(obj);
+  }
+
+  addControls() {
+    new OC(this.camera, this.container);
   }
 
   LoadModel(fileName) {
