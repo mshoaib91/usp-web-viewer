@@ -9,10 +9,29 @@ import ObjModelLoader from './Loaders/ObjModelLoader';
 
 class SceneCreator {
   constructor() {
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
     this.container = document.createElement('div');
     document.body.appendChild(this.container);
+    document.addEventListener('click', (e)=>{this.onMouseBtnClick(e);}, false);
     this.scene = new THREE.Scene();
-    window.myscene = this.scene; //todo :test
+    this.scene.background = new THREE.Color(0xd6d6d6);
+    window.myscene = this.scene;  //todo : remove this
+    window.myclass = this;        // todo : remove this
+  }
+
+  onMouseBtnClick(event) {
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    console.log(this.mouse);
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    this.intersects = this.raycaster.intersectObject(this.scene.children[2], true);
+    if (this.intersects.length) {
+      this.intersects[0].object.material.forEach(element => {
+        element.color.set(0xff0000);        
+      });
+    }
+    console.log(this.intersects);
   }
 
   setCamera() {
@@ -59,6 +78,7 @@ class SceneCreator {
    */
   _render() {
     this.camera.lookAt(this.scene.position);
+    //this.raycaster.setFromCamera(this.mouse, this.camera);
     this.renderer.render(this.scene, this.camera);
   }
 }
