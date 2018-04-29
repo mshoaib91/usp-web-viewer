@@ -12,6 +12,7 @@ class SceneCreator {
     this.container = document.createElement('div');
     document.body.appendChild(this.container);
     this.scene = new THREE.Scene();
+    window.myscene = this.scene; //todo :test
   }
 
   setCamera() {
@@ -36,7 +37,9 @@ class SceneCreator {
   }
 
   addControls() {
-    new OC(this.camera, this.container);
+    var oc = new OC(this.camera, this.container);
+    oc.minAzimuthAngle = 0 - (Math.PI / 2);
+    oc.maxAzimuthAngle = 0 + (Math.PI / 2);
   }
 
   LoadModel(fileName) {
