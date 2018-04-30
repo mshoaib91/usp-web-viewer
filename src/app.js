@@ -10,22 +10,29 @@ import './sass/app.scss'
 import ThreeMain from './ThreeMain'
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.threeRootElement = null; // will contain the root element for the threejs canvas
+    this.state = { dimensions : [0,0] };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateWindowDimensions);
     // leaving react world
     ThreeMain(this.threeRootElement)
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
   render() {
     return (
-      <div>
-        <Row>
-          <Col span={18}>
-            <div className='usp-model' ref={element => this.threeRootElement = element} height={window.height}>
+      <div style={{height: window.innerHeight}}>
+        <Row style={{height: '100%'}}>
+          <Col span={18} style={{height: '100%'}}>
+            <div className='usp-model' ref={element => this.threeRootElement = element}>
             </div>
           </Col>
           <Col span={6} className='settings-panel'>
@@ -34,6 +41,10 @@ class App extends React.Component {
         </Row>
       </div>
     );
+  }
+
+  updateWindowDimensions() {
+    this.setState({dimensions : [window.innerWidth, window.innerHeight]})
   }
 }
 

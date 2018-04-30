@@ -12,17 +12,22 @@ class SceneCreator {
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
     this.container = threeElement;
-    document.addEventListener('click', (e)=>{this.onMouseBtnClick(e);}, false);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xd6d6d6);
+    this.viewerWidth = threeElement.clientWidth;
+    this.viewerHeight = threeElement.clientHeight;
+    
+    // Event Listeners
+    document.addEventListener('click', (e)=>{this.onMouseBtnClick(e);}, false);
+    window.addEventListener( 'resize', (e)=>{this.onWindowResize(e);}, false );
+
     window.myscene = this.scene;  //todo : remove this
     window.myclass = this;        // todo : remove this
   }
 
   onMouseBtnClick(event) {
-    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-    console.log(this.mouse);
+    this.mouse.x = (event.clientX / this.viewerWidth) * 2 - 1;
+    this.mouse.y = - (event.clientY / this.viewerHeight) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, this.camera);
     this.intersects = this.raycaster.intersectObject(this.scene.children[2], true);
     if (this.intersects.length) {
@@ -30,11 +35,18 @@ class SceneCreator {
         element.color.set(0xff0000);        
       });
     }
-    console.log(this.intersects);
+  }
+
+  onWindowResize (event) {
+    this.viewerWidth = this.container.clientWidth;
+    this.viewerHeight = this.container.clientHeight;
+    this.camera.aspect = this.viewerWidth / this.viewerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.viewerWidth, this.viewerHeight);
   }
 
   setCamera() {
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+    this.camera = new THREE.PerspectiveCamera(45, this.viewerWidth / this.viewerHeight, 1, 2000);
     this.camera.position.z = 250;
   }
 
@@ -68,7 +80,7 @@ class SceneCreator {
   initRender() {
     this.renderer = new THREE.WebGLRenderer({alpha: true});
     this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.renderer.setSize(window.innerWidth, window.innerHeight);
+		this.renderer.setSize(this.viewerWidth, this.viewerHeight);
 		this.container.appendChild(this.renderer.domElement);
   }
 
