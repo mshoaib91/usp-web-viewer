@@ -1,32 +1,23 @@
-import SceneCreator from './SceneCreator';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
+
+// css import
 import 'antd/dist/antd.css';
+import './sass/app.scss'
 
-// var sc = new SceneCreator();
-// sc.setCamera();
-// sc.setLighting();
-// sc.addCameraToscene();
-// sc.LoadModel('../sample.obj')
-//   .then((obj) => {
-//     sc.addObjToScene(obj);
-//   })
-//   .catch((err) => {
-//     console.log('failed to load object', err);
-//   });
-// sc.addControls();
-// sc.initRender();
-
-// const animate = () => {
-//   requestAnimationFrame(animate);
-//   sc._render();
-// };
-// animate();
+// js import
+import ThreeMain from './ThreeMain'
 
 class App extends React.Component {
   constructor() {
     super();
+    this.threeRootElement = null; // will contain the root element for the threejs canvas
+  }
+
+  componentDidMount() {
+    // leaving react world
+    ThreeMain(this.threeRootElement)
   }
 
   render() {
@@ -34,9 +25,10 @@ class App extends React.Component {
       <div>
         <Row>
           <Col span={18}>
-            model
+            <div className='usp-model' ref={element => this.threeRootElement = element} height={window.height}>
+            </div>
           </Col>
-          <Col span={6}>
+          <Col span={6} className='settings-panel'>
             settings panel
           </Col>
         </Row>

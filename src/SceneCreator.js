@@ -8,11 +8,10 @@ import ObjModelLoader from './Loaders/ObjModelLoader';
 
 
 class SceneCreator {
-  constructor() {
+  constructor(threeElement) {
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
-    this.container = document.createElement('div');
-    document.body.appendChild(this.container);
+    this.container = threeElement;
     document.addEventListener('click', (e)=>{this.onMouseBtnClick(e);}, false);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xd6d6d6);
