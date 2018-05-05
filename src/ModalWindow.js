@@ -27,7 +27,7 @@ class ModalWindow extends React.Component {
         top : options.position.y,
         right : options.position.x
       }}>
-        <h3>Details:</h3>
+        <h4>Details:</h4>
         <p>{options.text}</p>
       </div>
     )
