@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './sass/modalWindow.scss'
+
 class ModalWindow extends React.Component {
   constructor(props) {
     super(props);
@@ -13,16 +15,20 @@ class ModalWindow extends React.Component {
   
   render() {
     let options = this.props.modalOptions;
+    if(options.position.x > window.innerWidth - 200) {
+      options.position.x = options.position.x - 200;
+    }
+    if(options.position.y > window.innerHeight - 150) {
+      options.position.y = options.position.y - 150;
+    }
     return (
-      <div style={{
+      <div className='modal-window' style={{
         display : (options.visible ? 'block' : 'none'),
-        width : '100px',
-        height : '100px',
-        position : 'absolute',
         top : options.position.y,
         right : options.position.x
       }}>
-        <h3>{options.text}</h3>
+        <h3>Details:</h3>
+        <p>{options.text}</p>
       </div>
     )
   }

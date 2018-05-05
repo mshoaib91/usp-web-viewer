@@ -36,17 +36,14 @@ class SceneCreator {
       this.intersects[0].object.material.forEach(element => {
         element.color.set(0xff0000);        
       });
-      // this.modalStateSetter({
-      //   text : 'this is an object',
-      //   position : {x : window.innerWidth - event.clientX, y : event.clientY},
-      //   visible : true
-      // });
       this.modalStateSetter(
         new ModalWinOptions()
-        .setText('this is an object')
+        .setText(this.intersects[0].object.name)
         .setPosition(window.innerWidth - event.clientX, event.clientY)
         .setVisibility(true)
       );
+    } else {
+      this.modalStateSetter(new ModalWinOptions().setVisibility(false));
     }
   }
 

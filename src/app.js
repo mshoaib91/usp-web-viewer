@@ -26,8 +26,10 @@ class App extends React.Component {
   }
   
   modalStateSetter(obj) {
-    let nmodalState = {...this.state, modalWindow : obj};
-    this.setState(nmodalState);
+    if(!(this.state.modalWindow.visible === false && obj.visible === false)) {
+      let nmodalState = {...this.state, modalWindow : obj};
+      this.setState(nmodalState);
+    }
   }
   
   componentDidMount() {
@@ -39,6 +41,8 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
+
+  componentWillUpdate() { }
   
   render() {
     return (
@@ -62,7 +66,7 @@ class App extends React.Component {
   }
 }
 
-App.PropTypes = {};
+App.propTypes = {};
 
 export default App; // this is just to stop the eslint 'not in use' error
 ReactDOM.render(<App />, document.getElementById('app'));
