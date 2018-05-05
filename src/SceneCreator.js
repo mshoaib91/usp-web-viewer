@@ -1,3 +1,4 @@
+/** created by shoaib khan on 30.4.2018 */
 import * as THREE from 'three';
 import OBJLoader from 'three-obj-loader';
 import OrbitControls from 'three-orbit-controls';
@@ -5,6 +6,7 @@ OBJLoader(THREE);
 var OC = OrbitControls(THREE);
 
 import ObjModelLoader from './Loaders/ObjModelLoader';
+import ModalWinOptions from './ModalWinOptions'
 
 
 class SceneCreator {
@@ -34,6 +36,17 @@ class SceneCreator {
       this.intersects[0].object.material.forEach(element => {
         element.color.set(0xff0000);        
       });
+      // this.modalStateSetter({
+      //   text : 'this is an object',
+      //   position : {x : window.innerWidth - event.clientX, y : event.clientY},
+      //   visible : true
+      // });
+      this.modalStateSetter(
+        new ModalWinOptions()
+        .setText('this is an object')
+        .setPosition(window.innerWidth - event.clientX, event.clientY)
+        .setVisibility(true)
+      );
     }
   }
 
@@ -43,6 +56,7 @@ class SceneCreator {
     this.camera.aspect = this.viewerWidth / this.viewerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.viewerWidth, this.viewerHeight);
+    this.modalStateSetter(new ModalWinOptions().setVisibility(false))
   }
 
   setCamera() {
@@ -91,6 +105,10 @@ class SceneCreator {
     this.camera.lookAt(this.scene.position);
     //this.raycaster.setFromCamera(this.mouse, this.camera);
     this.renderer.render(this.scene, this.camera);
+  }
+
+  setModalStateSetter(callback){
+    this.modalStateSetter = callback
   }
 }
 

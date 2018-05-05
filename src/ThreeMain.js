@@ -1,7 +1,9 @@
+/** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 
-export default function (threeElement) {
+export default function (threeElement, modalStateSetter) {
   var sc = new SceneCreator(threeElement);
+  sc.setModalStateSetter(modalStateSetter);
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
