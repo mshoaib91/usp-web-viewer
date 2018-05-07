@@ -9,7 +9,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack-dev-server --mode development --output-path /dist/",
-    "start" : "node src/server.js"
+    "start" : "node src/server.js",
+    "heroku-postbuild": "webpack --mode production"
   },
   "dependencies": {
     "antd": "^3.4.4",
