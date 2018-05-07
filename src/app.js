@@ -9,9 +9,9 @@ import 'antd/dist/antd.css';
 import './sass/app.scss'
 
 // js import
-import ThreeMain from './ThreeMain'
-import ModalWindow from './ModalWindow'
-import ModalWinOptions from './ModalWinOptions'
+import ThreeMain from './js/ThreeMain'
+import ModalWindow from './js/ModalWindow'
+import ModalWinOptions from './js/ModalWinOptions'
 
 class App extends React.Component {
   constructor(props) {
@@ -53,7 +53,8 @@ class App extends React.Component {
       </div>
       </Col>
       <Col span={6} className='settings-panel'>
-      settings panel
+      <p>Details Panel</p>
+
       <ModalWindow modalOptions={this.state.modalWindow}/>
       </Col>
       </Row>
