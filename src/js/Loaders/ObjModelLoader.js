@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import OBJLoader from 'three-obj-loader';
 OBJLoader(THREE);
+const MTLLoader = require('three-mtl-loader');
+let mtlLoader = new MTLLoader();
 
 import ModelLoader from "./ModelLoader";
 
@@ -19,7 +21,14 @@ class ObjModelLoader extends ModelLoader {
 
   load(objFile) {
     return new Promise((resolve, reject)=>{
-      this.loader.load(objFile, (obj)=> {resolve(obj);}, ()=>{}, (err)=>{reject(err);});
+      mtlLoader.setPath('/obj_examples/');
+      mtlLoader.load('', (material) => {
+        this.loader.setMaterials(material);
+        this.loader.load(objFile, (obj)=> {resolve(obj);}, ()=>{}, (err)=>{reject(err);});
+      });
+      mtlLoader.setMaterialOptions({
+        side : THREE.DoubleSide
+      });
     });
   }
   

@@ -7,7 +7,7 @@ export default function (threeElement, modalStateSetter) {
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
-  sc.LoadModel('../sample.obj')
+  sc.LoadModel('../sample_rot.obj')
   .then((obj) => {
     sc.addObjToScene(obj);
   })
