@@ -34,7 +34,8 @@ class SceneCreator {
     this.intersects = this.raycaster.intersectObject(this.scene.children[2], true);
     if (this.intersects.length) {
       this.intersects[0].object.material.forEach(element => {
-        element.color.set(0xff0000);        
+        element.color.set(0xff0000);
+        //element.wireframe = true;
       });
       this.modalStateSetter(
         new ModalWinOptions()
@@ -85,7 +86,12 @@ class SceneCreator {
 
   LoadModel(fileName) {
     var objLoader = new ObjModelLoader();
-    return objLoader.load(fileName);
+    return objLoader.loadObj(fileName)
+  }
+
+  LoadModelAndMtl(objFile, mtlFile) {
+    var objLoader = new ObjModelLoader();
+    return objLoader.load(objFile, mtlFile)
   }
 
   initRender() {

@@ -12,23 +12,29 @@ import ModelLoader from "./ModelLoader";
 */
 
 class ObjModelLoader extends ModelLoader {
-  
+
   /** Pass the scene */
   constructor() {
     super();
     this.loader = new THREE.OBJLoader(this.getLoadManager());
   }
 
-  load(objFile) {
+  load(objFile, mtlFile='') {
     return new Promise((resolve, reject)=>{
-      mtlLoader.setPath('/obj_examples/');
-      mtlLoader.load('', (material) => {
+      mtlLoader.load(mtlFile, (material) => {
+        console.log('this is material', material);
         this.loader.setMaterials(material);
         this.loader.load(objFile, (obj)=> {resolve(obj);}, ()=>{}, (err)=>{reject(err);});
       });
       mtlLoader.setMaterialOptions({
         side : THREE.DoubleSide
       });
+    });
+  }
+
+  loadObj(objFile) {
+    return new Promise((resolve, reject) => {
+      this.loader.load(objFile, (obj)=> {resolve(obj);}, ()=>{}, (err)=>{reject(err);});
     });
   }
   

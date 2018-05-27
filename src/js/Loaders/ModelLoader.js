@@ -14,8 +14,8 @@ class ModelLoader {
     } 
   }
   
-  load(file, scene) {
-    file, scene;
+  load(objFile, mtlFile) {
+    objFile, mtlFile;
   }
 
   onLoad() {}
