@@ -82,8 +82,6 @@ class SceneCreator {
   
   addControls() {
     var oc = new OC(this.camera, this.container);
-    oc.minAzimuthAngle = 0 - (Math.PI);
-    oc.maxAzimuthAngle = 0 + (Math.PI);
     oc.minPolarAngle = 0 - (Math.PI/2);
     oc.maxPolarAngle = 0 + (Math.PI/2);
   }
