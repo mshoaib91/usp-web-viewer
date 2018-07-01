@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
-import {UploadComponent} from './js/components/UploadComponent';
+import SidePane from './js/components/SidePane';
 
 // css import
 import 'antd/dist/antd.css';
@@ -47,17 +47,16 @@ class App extends React.Component {
   render() {
     return (
       <div style={{height: window.innerHeight}}>
-      <Row style={{height: '100%'}}>
-      <Col span={18} style={{height: '100%'}}>
-      <div className='usp-model' ref={element => this.threeRootElement = element}>
-      </div>
-      </Col>
-      <Col span={6} className='settings-panel'>
-      <p>Details Panel</p>
-      <UploadComponent />
-      <ModalWindow modalOptions={this.state.modalWindow}/>
-      </Col>
-      </Row>
+        <Row style={{height: '100%'}}>
+          <Col span={18} style={{height: '100%'}}>
+            <div className='usp-model' ref={element => this.threeRootElement = element}>
+            </div>
+          </Col>
+          <Col span={6} className='settings-panel'>
+            <SidePane />
+          </Col>
+        </Row>
+        <ModalWindow modalOptions={this.state.modalWindow}/>
       </div>
     );
   }
