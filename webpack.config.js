@@ -9,19 +9,23 @@ module.exports = {
   devtool: 'inline-source-map',
   module: {
     rules: [
-        { 
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: "babel-loader"
-        },
-        {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader']
-        },
-        {
-          test: /\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']  
-        }
+      { 
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']  
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
     ]
   },
   /** webpack-dev-server configurations */

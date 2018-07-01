@@ -33,21 +33,6 @@ class SceneCreator {
     this.mouse.y = - (event.clientY / this.viewerHeight) * 2 + 1;
     this.mouseClient.x = event.clientX;
     this.mouseClient.y = event.clientY;
-    // this.raycaster.setFromCamera(this.mouse, this.camera);
-    // this.intersects = this.raycaster.intersectObject(this.scene.children[2], true);
-    // if (this.intersects.length) {
-    //   this.intersects[0].object.material.forEach(element => {
-    //     element.color.set(0xff0000);
-    //   });
-    //   this.modalStateSetter(
-    //     new ModalWinOptions()
-    //     .setText(this.intersects[0].object.name)
-    //     .setPosition(window.innerWidth - event.clientX, event.clientY)
-    //     .setVisibility(true)
-    //   );
-    // } else {
-    //   this.modalStateSetter(new ModalWinOptions().setVisibility(false));
-    // }
   }
   
   onWindowResize (event) {
@@ -68,7 +53,6 @@ class SceneCreator {
     var ambientLight = new THREE.AmbientLight(0xcccccc, 0.4);
     var pointLight = new THREE.PointLight(0xffffff, 0.2);
     this.scene.add(ambientLight);
-    //this.scene.add(pointLight);
     this.camera.add(pointLight);  // point light is attached to camera
   }
   
@@ -119,9 +103,6 @@ class SceneCreator {
           this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
           this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
         } 
-        // this.intersects[0].object.material.forEach(element => {
-        //   element.color.set(0xff0000);
-        // });
         this.modalStateSetter(
           new ModalWinOptions()
           .setText(this.intersected.name)
