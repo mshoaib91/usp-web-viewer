@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../sass/modalWindow.scss';
+import '../../sass/modalWindow.scss';
 
 class ModalWindow extends React.Component {
   constructor(props) {

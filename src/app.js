@@ -2,15 +2,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
+import {UploadComponent} from './js/components/UploadComponent';
 
 // css import
 import 'antd/dist/antd.css';
-import './sass/app.scss'
+import './sass/app.scss';
 
 // js import
-import ThreeMain from './js/ThreeMain'
-import ModalWindow from './js/ModalWindow'
-import ModalWinOptions from './js/ModalWinOptions'
+import ThreeMain from './js/ThreeMain';
+import ModalWindow from './js/components/ModalWindow';
+import ModalWinOptions from './js/ModalWinOptions';
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class App extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateWindowDimensions);
     // leaving react world
-    ThreeMain(this.threeRootElement, this.modalStateSetter)
+    ThreeMain(this.threeRootElement, this.modalStateSetter);
   }
   
   componentWillUnmount() {
@@ -53,7 +54,7 @@ class App extends React.Component {
       </Col>
       <Col span={6} className='settings-panel'>
       <p>Details Panel</p>
-
+      <UploadComponent />
       <ModalWindow modalOptions={this.state.modalWindow}/>
       </Col>
       </Row>
@@ -62,7 +63,7 @@ class App extends React.Component {
   }
   
   updateWindowDimensions() {
-    this.setState({dimensions : [window.innerWidth, window.innerHeight]})
+    this.setState({dimensions : [window.innerWidth, window.innerHeight]});
   }
 }
 
