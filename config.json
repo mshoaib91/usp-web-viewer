@@ -1,5 +1,23 @@
 {
   "paths" : {
     "defaultObj" : "/obj_examples/sample_rot.obj"
+  },
+  "colors" : {
+    "scene_background" : "0xd6d6d6"
+  },
+  "light" : {
+    "ambient" : {
+      "color" : "0xcccccc",
+      "intensity" : "0.4"
+    },
+    "point" : {
+      "color" : "0xffffff",
+      "intensity" : "0.2"
+    }
+  },
+  "camera" : {
+    "fov" : "45",
+    "near" : "1",
+    "far" : "2000"
   }
 }

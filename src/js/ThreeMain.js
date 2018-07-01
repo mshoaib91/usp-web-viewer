@@ -3,7 +3,6 @@ import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
 
 export default function (threeElement, modalStateSetter) {
-  console.log(configs);
   var sc = new SceneCreator(threeElement);
   sc.setModalStateSetter(modalStateSetter);
   sc.setCamera();

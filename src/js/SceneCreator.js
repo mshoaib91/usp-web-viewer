@@ -6,7 +6,8 @@ OBJLoader(THREE);
 var OC = OrbitControls(THREE);
 
 import ObjModelLoader from './Loaders/ObjModelLoader';
-import ModalWinOptions from './ModalWinOptions'
+import ModalWinOptions from './ModalWinOptions';
+import config from '../../config.json';
 
 
 class SceneCreator {
@@ -16,7 +17,7 @@ class SceneCreator {
     this.mouseClient = new THREE.Vector2;
     this.container = threeElement;
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xd6d6d6);
+    this.scene.background = new THREE.Color(Number(config.colors.scene_background));
     this.viewerWidth = threeElement.clientWidth;
     this.viewerHeight = threeElement.clientHeight;
     
@@ -45,13 +46,13 @@ class SceneCreator {
   }
   
   setCamera() {
-    this.camera = new THREE.PerspectiveCamera(45, this.viewerWidth / this.viewerHeight, 1, 2000);
+    this.camera = new THREE.PerspectiveCamera(Number(config.camera.fov), this.viewerWidth / this.viewerHeight, Number(config.camera.near), Number(config.camera.far));
     this.camera.position.z = 250;
   }
   
   setLighting() {
-    var ambientLight = new THREE.AmbientLight(0xcccccc, 0.4);
-    var pointLight = new THREE.PointLight(0xffffff, 0.2);
+    var ambientLight = new THREE.AmbientLight(Number(config.light.ambient.color), Number(config.light.ambient.intensity));
+    var pointLight = new THREE.PointLight(Number(config.light.point.color), Number(config.light.point.intensity));
     this.scene.add(ambientLight);
     this.camera.add(pointLight);  // point light is attached to camera
   }
