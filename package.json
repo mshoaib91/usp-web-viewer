@@ -12,6 +12,9 @@
     "start": "node src/server.js",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "dependencies": {
     "antd": "^3.4.4",
     "http-server": "^0.11.1",
