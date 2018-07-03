@@ -5,7 +5,7 @@ import {Row, Col, Icon, Button} from 'antd';
 import {UploadComponent} from './UploadComponent';
 import {RunningScene} from '../ThreeMain';
 
-import '../../sass/SidePane.scss';
+import './SidePane.scss';
 
 const ButtonGroup = Button.Group
 
