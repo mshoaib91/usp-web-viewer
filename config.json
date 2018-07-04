@@ -1,6 +1,6 @@
 {
   "paths" : {
-    "defaultObj" : "/obj_examples/sample_rot.obj"
+    "defaultObj" : "/objexamples/sample_rot.obj"
   },
   "colors" : {
     "scene_background" : "0xd6d6d6"

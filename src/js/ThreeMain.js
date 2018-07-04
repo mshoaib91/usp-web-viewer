@@ -10,7 +10,7 @@ export default function (threeElement, modalStateSetter) {
   sc.addCameraToscene();
   //sc.LoadModelAndMtl('/obj_examples/sample_rot.obj', '/obj_examples/Demo.mtl')
   //.then(obj => sc.addObjToScene(obj))
-  sc.LoadModel('/obj_examples/sample_rot.obj')
+  sc.LoadModel(configs.paths.defaultObj)
   .then((obj) => {
     obj.children.forEach(el => {
       el.material.forEach(mt => {
