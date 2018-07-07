@@ -1,23 +1,21 @@
 import React from 'react';
 import { Upload, Icon, message } from 'antd';
 
+
 const Dragger = Upload.Dragger;
 
 const DraggerProps = {
   name: 'file',
   multiple: false,
-  action: '//jsonplaceholder.typicode.com/posts/',
-  onChange(info) {
-    const status = info.file.status;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
+  beforeUpload(file) {
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onloadend = (evt) => {
+      console.log(evt);
     }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
+    return false;
   },
+  
 };
 
 export const UploadComponent = (props) => {
