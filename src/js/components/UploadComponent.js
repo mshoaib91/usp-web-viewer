@@ -1,6 +1,8 @@
 import React from 'react';
 import { Upload, Icon, message } from 'antd';
 
+import FileProcessor from '../FileProcessor';
+
 
 const Dragger = Upload.Dragger;
 
@@ -8,11 +10,8 @@ const DraggerProps = {
   name: 'file',
   multiple: false,
   beforeUpload(file) {
-    let reader = new FileReader();
-    reader.readAsText(file);
-    reader.onloadend = (evt) => {
-      console.log(evt);
-    }
+    let fileProcessor = new FileProcessor();
+    fileProcessor.readZip(file);
     return false;
   },
   
