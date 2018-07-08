@@ -41,8 +41,6 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
-
-  componentWillUpdate() { }
   
   render() {
     return (

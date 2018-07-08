@@ -3,7 +3,8 @@
     "defaultObj" : "/objexamples/sample_rot.obj"
   },
   "colors" : {
-    "scene_background" : "0xd6d6d6"
+    "scene_background" : "0xd6d6d6",
+    "sidepanel_background" : "#f7f7f7"
   },
   "light" : {
     "ambient" : {

@@ -1,9 +1,9 @@
 /** created by shoaib khan on 01.07.2018 */
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Row, Col, Icon, Button} from 'antd';
+import {Row, Col, Button} from 'antd';
 import {UploadComponent} from './UploadComponent';
-import {RunningScene} from '../ThreeMain';
+import config from '../../../config.json';
+
 
 import '../../sass/sidePane.scss';
 
@@ -31,11 +31,11 @@ class SidePane extends React.Component {
       upload : (menuType === MenuTypes.upload ? true : false)
     }
     this.setState({...this.state, menu : changedMenu})
-  }  
+  }
 
   render() {
     return (
-      <div className="side-pane">
+      <div className="side-pane" style={{backgroundColor: config.colors.sidepanel_background}}>
         <Row type="flex" justify="center">
           <Col span={23}>
             <Row type="flex" justify="center" className="gap">
