@@ -9,14 +9,18 @@ import JSZip from 'jszip';
 class FileProcessor {
   
   readZip(zipFile) {
+    let zip = new JSZip();
     this.readFile(zipFile)
     .then((buffer) => {
-      let zip = new JSZip();
       return zip.loadAsync(buffer)
     })
-    .then((zip) => {
-      console.log('response from jszip');
-      console.log(zip);
+    .then((zipContents) => {
+      console.log(zipContents);
+      for (var file in zipContents.files) {
+        if(file.match((/\.obj\b/)).length) {
+          zip.file(file).async("string").then((content) => {console.log(content)}).catch(err => console.error(err));
+        }
+      } 
     })
     .catch(err => {
       console.error(err);
