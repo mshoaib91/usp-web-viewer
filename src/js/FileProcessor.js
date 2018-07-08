@@ -8,25 +8,38 @@ import JSZip from 'jszip';
  */
 class FileProcessor {
   
+  /**
+   * Reads a zip file and get .Obj files from it
+   * @param {File} zipFile
+   * @returns {Promise<ArrayBuffer[]>}
+   */
   readZip(zipFile) {
     let zip = new JSZip();
-    this.readFile(zipFile)
+    return this.readFile(zipFile)
     .then((buffer) => {
       return zip.loadAsync(buffer)
     })
     .then((zipContents) => {
-      console.log(zipContents);
+      let promiseArray = [];
       for (var file in zipContents.files) {
         if(file.match((/\.obj\b/)).length) {
-          zip.file(file).async("string").then((content) => {console.log(content)}).catch(err => console.error(err));
+          promiseArray.push(zip.file(file).async("arraybuffer"));
         }
-      } 
+      }
+      return Promise.all(promiseArray) 
+    }).then((bufferArrays) => {
+      return bufferArrays;
     })
     .catch(err => {
       console.error(err);
     })
   }
 
+  /**
+   * Reads the file using html5 FileReader API
+   * @param {File} file
+   * @returns {Promise<buffer>} 
+   */
   readFile(file) {
     return new Promise((resolve, reject) => {
       let reader = new FileReader();

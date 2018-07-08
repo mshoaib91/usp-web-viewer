@@ -11,7 +11,10 @@ const DraggerProps = {
   multiple: false,
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
-    fileProcessor.readZip(file);
+    fileProcessor.readZip(file)
+    .then(arrayBuffer => {
+      console.log(arrayBuffer);
+    })
     return false;
   },
   
