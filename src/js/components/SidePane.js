@@ -35,23 +35,25 @@ class SidePane extends React.Component {
 
   render() {
     return (
-      <Row className="side-pane">
-        <Col span={24}>
-          <Row type="flex" justify="center" className="gap">
-            <Col span={24}>
-            <ButtonGroup style={{float: 'right'}}>
-              <Button size="large" icon="dashboard" onClick={(event)=>{this.onMenuClick(MenuTypes.dashboard)}}/>
-              <Button size="large" icon="file-add" onClick={(event)=>{this.onMenuClick(MenuTypes.upload)}}/>
-            </ButtonGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {this.state.menu.upload ? <UploadComponent /> : <h3>Dashboard</h3>}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <div className="side-pane">
+        <Row type="flex" justify="center">
+          <Col span={23}>
+            <Row type="flex" justify="center" className="gap">
+              <Col span={24}>
+              <ButtonGroup style={{float: 'right'}}>
+                <Button size="large" icon="dashboard" onClick={(event)=>{this.onMenuClick(MenuTypes.dashboard)}}/>
+                <Button size="large" icon="file-add" onClick={(event)=>{this.onMenuClick(MenuTypes.upload)}}/>
+              </ButtonGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {this.state.menu.upload ? <UploadComponent /> : <h3>Dashboard</h3>}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
