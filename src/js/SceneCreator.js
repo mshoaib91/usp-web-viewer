@@ -9,9 +9,21 @@ import ObjModelLoader from './Loaders/ObjModelLoader';
 import ModalWinOptions from './ModalWinOptions';
 import config from '../../config.json';
 
+let sceneCreatorInstance = null;
 
+/**
+ * Singleton class
+ * create a scene and initialize all the required components.
+ * Contains methods related to the scene
+ */
 class SceneCreator {
   constructor(threeElement) {
+    if (sceneCreatorInstance === null) {
+      sceneCreatorInstance = this;
+    } else {
+      return sceneCreatorInstance;
+    }
+
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
     this.mouseClient = new THREE.Vector2;

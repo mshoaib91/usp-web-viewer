@@ -2,6 +2,7 @@ import React from 'react';
 import { Upload, Icon, message } from 'antd';
 
 import FileProcessor from '../FileProcessor';
+import SceneCreator from '../SceneCreator';
 
 
 const Dragger = Upload.Dragger;
@@ -12,8 +13,18 @@ const DraggerProps = {
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
-    .then(arrayBuffer => {
-      console.log(arrayBuffer);
+    .then(objBuffer => {
+      let objFile = new File(
+        objBuffer,
+        "key.obj"
+      );
+      const objFileUrl = URL.createObjectURL(objFile);
+      const sc = new SceneCreator();
+      sc.LoadModel(objFileUrl)
+      .then(obj => {
+        sc.addObjToScene(obj);
+      })
+      .catch(err => console.error(err));
     })
     return false;
   },
