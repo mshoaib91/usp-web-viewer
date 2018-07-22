@@ -8,18 +8,18 @@ export default function (threeElement, modalStateSetter) {
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
-  //sc.LoadModelAndMtl('/obj_examples/sample_rot.obj', '/obj_examples/Demo.mtl')
-  //.then(obj => sc.addObjToScene(obj))
-  sc.LoadModel(configs.paths.defaultObj)
-  .then((obj) => {
-    obj.children.forEach(el => {
-      el.material.forEach(mt => {
-        console.log(mt);
-        mt.side = 2;          // 2 is equal to THREE.BothSide
-      });
-    });
-    sc.addObjToScene(obj);
-  })
+  sc.LoadModelAndMtl(configs.paths.defaultObj, configs.paths.defaultMtl)
+  .then(obj => sc.addObjToScene(obj))
+  // sc.LoadModel(configs.paths.defaultObj)
+  // .then((obj) => {
+  //   obj.children.forEach(el => {
+  //     el.material.forEach(mt => {
+  //       console.log(mt);
+  //       mt.side = 2;          // 2 is equal to THREE.BothSide
+  //     });
+  //   });
+  //   sc.addObjToScene(obj);
+  // })
   .catch((err) => {
     console.log('failed to load object', err);
   });
