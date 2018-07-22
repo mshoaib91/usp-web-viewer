@@ -21,14 +21,21 @@ class FileProcessor {
     })
     .then((zipContents) => {
       let promiseArray = [];
+      let nameArray = [];
       for (var file in zipContents.files) {
         if(file.match((/\.obj\b/)).length) {
           promiseArray.push(zip.file(file).async("arraybuffer"));
+          nameArray.push(file);
         }
       }
-      return Promise.all(promiseArray) 
-    }).then((bufferArrays) => {
-      return bufferArrays;
+      return {promiseArray: Promise.all(promiseArray), nameArray} 
+    }).then((arraysObj) => {
+      return new Promise((resolve, reject) => {
+        let {promiseArray, nameArray} = arraysObj;
+        promiseArray.then(objBufferArr => {
+          resolve({objBufferArr, nameArray});
+        });
+      })
     })
     .catch(err => {
       console.error(err);

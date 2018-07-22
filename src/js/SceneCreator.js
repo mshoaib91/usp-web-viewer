@@ -111,7 +111,9 @@ class SceneCreator {
       let intersects = this.raycaster.intersectObject(this.scene.children[2], true);
       if (intersects.length) {
         if (this.intersected != intersects[0].object) {
-          if (this.intersected) this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+          if (this.intersected) {
+            this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+          }
           this.intersected = intersects[0].object;
           this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
           this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
