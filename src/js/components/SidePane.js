@@ -3,6 +3,7 @@ import React from 'react';
 import {Row, Col, Button} from 'antd';
 import {UploadComponent} from './UploadComponent';
 import config from '../../../config.json';
+import PropTypes from 'prop-types';
 
 
 import '../../sass/sidePane.scss';
@@ -48,7 +49,7 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <UploadComponent /> : <h3>Dashboard</h3>}
+                {this.state.menu.upload ? <UploadComponent fileList={this.props.fileList}/> : <h3>Dashboard</h3>}
               </Col>
             </Row>
           </Col>
@@ -56,6 +57,10 @@ class SidePane extends React.Component {
       </div>
     );
   }
+}
+
+SidePane.PropTypes = {
+  fileList : PropTypes.array
 }
 
 export default SidePane;

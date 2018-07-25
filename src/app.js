@@ -41,8 +41,15 @@ class App extends React.Component {
   /**
    * Maintains the list of files that are in the scene
    * @param {Object[]} fileList
+   * @param {string} flag two possible flags `add` and `remove`
    */
-  objFilesReferenceAdder(fileList) {
+  objFilesReferenceAdder(fileName, flag) {
+    let fileList = this.state.fileList.slice();
+    if(flag === 'add') {
+      fileList.push(fileName)
+    } else if(flag === 'remove') {
+      fileList = fileList.filter(item => item !== fileName)
+    }
     let newState = {...this.state, fileList}
     this.setState(newState)
   }
@@ -53,6 +60,7 @@ class App extends React.Component {
     /** LEAVING REACT WORLD */
     // React actions
     const reactActions = {
+      reactState : this.state,
       modalStateSetter : this.modalStateSetter,
       objFilesReferenceAdder : this.objFilesReferenceAdder
     }
@@ -73,7 +81,7 @@ class App extends React.Component {
             </div>
           </Col>
           <Col span={6} className='settings-panel'>
-            <SidePane />
+            <SidePane fileList={this.state.fileList}/>
           </Col>
         </Row>
         <ModalWindow modalOptions={this.state.modalWindow}/>

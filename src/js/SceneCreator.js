@@ -75,12 +75,10 @@ class SceneCreator {
   }
   
   addObjToScene(obj) {
+    this.ReactActions.objFilesReferenceAdder(obj.name, "add");
     this.scene.add(obj);
   }
 
-  addSceneNameInReactState(name) {
-
-  }
   
   addControls() {
     var oc = new OC(this.camera, this.container);
