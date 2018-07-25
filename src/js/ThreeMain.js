@@ -12,12 +12,13 @@ export default function (threeElement, modalStateSetter) {
   /** Loading model with materials */
   sc.LoadModelAndMtl(configs.paths.defaultObj, configs.paths.defaultMtl)
   .then(obj => {
+    obj.name = configs.paths.defaultObj.split('/').pop();
     obj.children.forEach(el => {
       el.material = el.material.map(mtl => {
         return new THREE.MeshPhongMaterial(mtl);
       })
     })
-    sc.addObjToScene(obj)
+    sc.addObjToScene(obj);
   })
  
   /** Loading model without mtl */
