@@ -1,6 +1,7 @@
 /** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
+import * as THREE from 'three';
 
 export default function (threeElement, modalStateSetter) {
   let sc = new SceneCreator(threeElement);
@@ -10,11 +11,20 @@ export default function (threeElement, modalStateSetter) {
   sc.addCameraToscene();
   /** Loading model with materials */
   sc.LoadModelAndMtl(configs.paths.defaultObj, configs.paths.defaultMtl)
-  .then(obj => sc.addObjToScene(obj))
+  .then(obj => {
+    obj.children.forEach(el => {
+      el.material = el.material.map(mtl => {
+        return new THREE.MeshPhongMaterial(mtl);
+      })
+    })
+    sc.addObjToScene(obj)
+  })
  
   /** Loading model without mtl */
   // sc.LoadModel(configs.paths.defaultObj)
-  // .then(obj => sc.addObjToScene(obj))
+  // .then(obj => {
+  //   sc.addObjToScene(obj)
+  // })
  
   /** Loading model with backface culling enabled */
   // sc.LoadModel(configs.paths.defaultObj)
@@ -27,9 +37,10 @@ export default function (threeElement, modalStateSetter) {
   //   });
   //   sc.addObjToScene(obj);
   // })
-  // .catch((err) => {
-  //   console.log('failed to load object', err);
-  // });
+
+  .catch((err) => {
+    console.log('failed to load object', err);
+  });
   
   sc.addControls();
   sc.initRender();
