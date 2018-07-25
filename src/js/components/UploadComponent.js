@@ -1,6 +1,6 @@
 import React from 'react';
 import { Upload, Icon, message } from 'antd';
-
+import PropTypes from 'prop-types';
 import FileProcessor from '../FileProcessor';
 import SceneCreator from '../SceneCreator';
 
@@ -10,6 +10,7 @@ const Dragger = Upload.Dragger;
 const DraggerProps = {
   name: 'file',
   multiple: false,
+  showUploadList: false,
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
@@ -33,7 +34,6 @@ const DraggerProps = {
 };
 
 export const UploadComponent = (props) => {
-  console.log("props are", props);
   return (
     <div>
       <Dragger {...DraggerProps}>
@@ -49,3 +49,7 @@ export const UploadComponent = (props) => {
   </div>
   );
 }
+
+UploadComponent.propTypes = {
+  fileList : PropTypes.array
+};
