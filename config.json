@@ -1,7 +1,7 @@
 {
   "paths" : {
-    "defaultObj" : "/objexamples/example.obj",
-    "defaultMtl" : "/objexamples/example.mtl"
+    "defaultObj" : "/objexamples/sample_rot.obj",
+    "defaultMtl" : "/objexamples/Demo.mtl"
   },
   "colors" : {
     "scene_background" : "0xd6d6d6",

@@ -112,14 +112,14 @@ class SceneCreator {
       if (intersects.length) {
         if (this.intersected != intersects[0].object) {
           if (this.intersected) {
-            //this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
-            this.intersected.material.emissive.setHex(this.intersected.currentHex);
+            this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+            //this.intersected.material.emissive.setHex(this.intersected.currentHex);
           }
           this.intersected = intersects[0].object;
-          //this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
-          this.intersected.currentHex = this.intersected.material.emissive.getHex();
-          //this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
-          this.intersected.material.emissive.setHex(0xff0000);
+          this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
+          //this.intersected.currentHex = this.intersected.material.emissive.getHex();
+          this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
+          //this.intersected.material.emissive.setHex(0xff0000);
         } 
         this.modalStateSetter(
           new ModalWinOptions()
@@ -129,8 +129,8 @@ class SceneCreator {
         );        
       } else {
         if (this.intersected) {
-          //this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
-          this.intersected.material.emissive.setHex(this.intersected.currentHex);
+          this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+          //this.intersected.material.emissive.setHex(this.intersected.currentHex);
         }
         this.intersected = null;
         this.modalStateSetter(new ModalWinOptions().setVisibility(false));

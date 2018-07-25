@@ -8,8 +8,15 @@ export default function (threeElement, modalStateSetter) {
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
+  /** Loading model with materials */
   sc.LoadModelAndMtl(configs.paths.defaultObj, configs.paths.defaultMtl)
   .then(obj => sc.addObjToScene(obj))
+ 
+  /** Loading model without mtl */
+  // sc.LoadModel(configs.paths.defaultObj)
+  // .then(obj => sc.addObjToScene(obj))
+ 
+  /** Loading model with backface culling enabled */
   // sc.LoadModel(configs.paths.defaultObj)
   // .then((obj) => {
   //   obj.children.forEach(el => {
@@ -20,9 +27,10 @@ export default function (threeElement, modalStateSetter) {
   //   });
   //   sc.addObjToScene(obj);
   // })
-  .catch((err) => {
-    console.log('failed to load object', err);
-  });
+  // .catch((err) => {
+  //   console.log('failed to load object', err);
+  // });
+  
   sc.addControls();
   sc.initRender();
   
