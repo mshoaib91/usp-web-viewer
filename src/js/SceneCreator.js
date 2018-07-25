@@ -17,7 +17,7 @@ let sceneCreatorInstance = null;
  * Contains methods related to the scene
  */
 class SceneCreator {
-  constructor(threeElement) {
+  constructor(threeElement, ReactActionsObject) {
     if (sceneCreatorInstance === null) {
       sceneCreatorInstance = this;
     } else {
@@ -32,6 +32,7 @@ class SceneCreator {
     this.scene.background = new THREE.Color(Number(config.colors.scene_background));
     this.viewerWidth = threeElement.clientWidth;
     this.viewerHeight = threeElement.clientHeight;
+    this.ReactActions = ReactActionsObject    // injected react actions
     
     // Event Listeners
     document.addEventListener('mousemove', (e)=>{this.onDocumentMouseMove(e);}, false);
@@ -54,7 +55,7 @@ class SceneCreator {
     this.camera.aspect = this.viewerWidth / this.viewerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.viewerWidth, this.viewerHeight);
-    this.modalStateSetter(new ModalWinOptions().setVisibility(false))
+    this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false))
   }
   
   setCamera() {
@@ -75,6 +76,10 @@ class SceneCreator {
   
   addObjToScene(obj) {
     this.scene.add(obj);
+  }
+
+  addSceneNameInReactState(name) {
+
   }
   
   addControls() {
@@ -121,7 +126,7 @@ class SceneCreator {
           this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
           //this.intersected.material.emissive.setHex(0xff0000);
         } 
-        this.modalStateSetter(
+        this.ReactActions.modalStateSetter(
           new ModalWinOptions()
           .setText(this.intersected.name)
           .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
@@ -133,16 +138,13 @@ class SceneCreator {
           //this.intersected.material.emissive.setHex(this.intersected.currentHex);
         }
         this.intersected = null;
-        this.modalStateSetter(new ModalWinOptions().setVisibility(false));
+        this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false));
       }
       /** render scene */
       this.renderer.render(this.scene, this.camera);
     }
   }
   
-  setModalStateSetter(callback){
-    this.modalStateSetter = callback
-  }
 }
 
 export default SceneCreator;

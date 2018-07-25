@@ -19,23 +19,45 @@ class App extends React.Component {
     this.threeRootElement = null; // will contain the root element for the threejs canvas
     this.state = {
       dimensions : [0,0],
-      modalWindow : new ModalWinOptions()
+      modalWindow : new ModalWinOptions(),
+      fileList : []
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.modalStateSetter = this.modalStateSetter.bind(this);
+    this.objFilesReferenceAdder = this.objFilesReferenceAdder.bind(this);
   }
   
-  modalStateSetter(obj) {
-    if(!(this.state.modalWindow.visible === false && obj.visible === false)) {
-      let nmodalState = {...this.state, modalWindow : obj};
-      this.setState(nmodalState);
+  /**
+   * set the modal window state i.e visibility, position and text to display
+   * Modal window is the window that shows mesh information when hovered
+   */
+  modalStateSetter(modalObj) {
+    if(!(this.state.modalWindow.visible === false && modalObj.visible === false)) {
+      let modalState = {...this.state, modalWindow : modalObj};
+      this.setState(modalState);
     }
   }
+
+  /**
+   * Maintains the list of files that are in the scene
+   * @param {Object[]} fileList
+   */
+  objFilesReferenceAdder(fileList) {
+    let newState = {...this.state, fileList}
+    this.setState(newState)
+  }
   
+
   componentDidMount() {
     window.addEventListener('resize', this.updateWindowDimensions);
-    // leaving react world
-    ThreeMain(this.threeRootElement, this.modalStateSetter);
+    /** LEAVING REACT WORLD */
+    // React actions
+    const reactActions = {
+      modalStateSetter : this.modalStateSetter,
+      objFilesReferenceAdder : this.objFilesReferenceAdder
+    }
+    // injecting html element for threejs and react actions object
+    ThreeMain(this.threeRootElement, reactActions);
   }
   
   componentWillUnmount() {

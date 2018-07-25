@@ -3,9 +3,8 @@ import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
 import * as THREE from 'three';
 
-export default function (threeElement, modalStateSetter) {
-  let sc = new SceneCreator(threeElement);
-  sc.setModalStateSetter(modalStateSetter);
+export default function (threeElement, reactStateActions) {
+  let sc = new SceneCreator(threeElement, reactStateActions);
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
