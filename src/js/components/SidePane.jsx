@@ -59,7 +59,7 @@ class SidePane extends React.Component {
   }
 }
 
-SidePane.PropTypes = {
+SidePane.propTypes = {
   fileList : PropTypes.array
 }
 

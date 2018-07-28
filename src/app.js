@@ -12,6 +12,7 @@ import './sass/app.scss';
 // js import
 import ThreeMain from './js/ThreeMain';
 import ModalWinOptions from './js/ModalWinOptions';
+import ReactActions from './js/ReactActions';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,47 +24,13 @@ class App extends React.Component {
       fileList : []
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    this.modalStateSetter = this.modalStateSetter.bind(this);
-    this.objFilesReferenceAdder = this.objFilesReferenceAdder.bind(this);
   }
   
-  /**
-   * set the modal window state i.e visibility, position and text to display
-   * Modal window is the window that shows mesh information when hovered
-   */
-  modalStateSetter(modalObj) {
-    if(!(this.state.modalWindow.visible === false && modalObj.visible === false)) {
-      let modalState = {...this.state, modalWindow : modalObj};
-      this.setState(modalState);
-    }
-  }
-
-  /**
-   * Maintains the list of files that are in the scene
-   * @param {Object[]} fileList
-   * @param {string} flag two possible flags `add` and `remove`
-   */
-  objFilesReferenceAdder(fileName, flag) {
-    let fileList = this.state.fileList.slice();
-    if(flag === 'add') {
-      fileList.push(fileName)
-    } else if(flag === 'remove') {
-      fileList = fileList.filter(item => item !== fileName)
-    }
-    let newState = {...this.state, fileList}
-    this.setState(newState)
-  }
-  
-
   componentDidMount() {
     window.addEventListener('resize', this.updateWindowDimensions);
     /** LEAVING REACT WORLD */
     // React actions
-    const reactActions = {
-      reactState : this.state,
-      modalStateSetter : this.modalStateSetter,
-      objFilesReferenceAdder : this.objFilesReferenceAdder
-    }
+    const reactActions = new ReactActions(this);
     // injecting html element for threejs and react actions object
     ThreeMain(this.threeRootElement, reactActions);
   }
