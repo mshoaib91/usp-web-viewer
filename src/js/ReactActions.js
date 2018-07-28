@@ -2,7 +2,7 @@
 
 export default class ReactActions {
   constructor(ReactClassRef) {
-    this.ReactClass = ReactClassRef
+    this.reactClass = ReactClassRef
   }
 
   /**
@@ -10,9 +10,9 @@ export default class ReactActions {
    * Modal window is the window that shows mesh information when hovered
    */
   modalStateSetter(modalObj) {
-    if(!(this.ReactClass.state.modalWindow.visible === false && modalObj.visible === false)) {
-      let modalState = {...this.ReactClass.state, modalWindow : modalObj};
-      this.ReactClass.setState(modalState);
+    if(!(this.reactClass.state.modalWindow.visible === false && modalObj.visible === false)) {
+      let modalState = {...this.reactClass.state, modalWindow : modalObj};
+      this.reactClass.setState(modalState);
     }
   }
 
@@ -22,13 +22,18 @@ export default class ReactActions {
    * @param {string} flag two possible flags `add` and `remove`
    */
   objFilesReferenceAdder(fileName, flag) {
-    let fileList = this.ReactClass.state.fileList.slice();
+    let fileList = this.reactClass.state.fileList.slice();
     if(flag === 'add') {
       fileList.push(fileName)
     } else if(flag === 'remove') {
       fileList = fileList.filter(item => item !== fileName)
     }
-    let newState = {...this.ReactClass.state, fileList}
-    this.ReactClass.setState(newState)
+    let newState = {...this.reactClass.state, fileList}
+    this.reactClass.setState(newState)
+  }
+
+  setActiveModel (obj3d) {
+    let newState = {...this.reactClass.state, activeModel : obj3d};
+    this.reactClass.setState(newState);
   }
 }

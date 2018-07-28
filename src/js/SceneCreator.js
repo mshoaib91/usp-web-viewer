@@ -76,6 +76,7 @@ class SceneCreator {
   
   addObjToScene(obj) {
     this.ReactActions.objFilesReferenceAdder(obj.name, "add");
+    this.ReactActions.setActiveModel(obj);
     this.scene.add(obj);
   }
 
@@ -110,19 +111,26 @@ class SceneCreator {
     this.camera.lookAt(this.scene.position);
     /** Ray caster for selection highlighting */
     this.raycaster.setFromCamera(this.mouse, this.camera);
-    if(this.scene.children[2] !== undefined) {
-      let intersects = this.raycaster.intersectObject(this.scene.children[2], true);
+    const activeModel = this.ReactActions.reactClass.state.activeModel;
+    if(activeModel !== undefined && activeModel !== null) {
+      let intersects = this.raycaster.intersectObject(activeModel, true);
       if (intersects.length) {
         if (this.intersected != intersects[0].object) {
           if (this.intersected) {
-            this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
-            //this.intersected.material.emissive.setHex(this.intersected.currentHex);
+            if (Array.isArray(this.intersected.material)) {
+              this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+            } else {
+              this.intersected.material.emissive.setHex(this.intersected.currentHex);
+            }
           }
           this.intersected = intersects[0].object;
-          this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
-          //this.intersected.currentHex = this.intersected.material.emissive.getHex();
-          this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
-          //this.intersected.material.emissive.setHex(0xff0000);
+          if (Array.isArray(this.intersected.material)) {       // some models materials are array and some are object. this condition handle respectively
+            this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
+            this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
+          } else {
+            this.intersected.currentHex = this.intersected.material.emissive.getHex();
+            this.intersected.material.emissive.setHex(0xff0000);
+          }
         } 
         this.ReactActions.modalStateSetter(
           new ModalWinOptions()
@@ -132,8 +140,11 @@ class SceneCreator {
         );        
       } else {
         if (this.intersected) {
-          this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
-          //this.intersected.material.emissive.setHex(this.intersected.currentHex);
+          if (Array.isArray(this.intersected.material)) {
+            this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+          }else {
+            this.intersected.material.emissive.setHex(this.intersected.currentHex);
+          }
         }
         this.intersected = null;
         this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false));

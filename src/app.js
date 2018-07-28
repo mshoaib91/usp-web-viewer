@@ -21,7 +21,8 @@ class App extends React.Component {
     this.state = {
       dimensions : [0,0],
       modalWindow : new ModalWinOptions(),
-      fileList : []
+      fileList : [],
+      activeModel: null,    // contains threejs `Object3D` object
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
