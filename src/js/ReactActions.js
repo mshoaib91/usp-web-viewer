@@ -33,8 +33,8 @@ export default class ReactActions {
     let fileList = this.reactClass.state.fileList;
     fileObj.removeModelFromScene();
     const index = fileList.indexOf(fileObj);
-    const newList =  fileList.splice(index, 1).slice();
-    let newState = {...this.reactClass.state, fileList : newList, activeModel : null};
+    fileList.splice(index, 1)
+    let newState = {...this.reactClass.state, fileList, activeModel : null};
     this.reactClass.setState(newState);
   }
 
