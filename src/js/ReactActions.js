@@ -2,7 +2,8 @@
 
 export default class ReactActions {
   constructor(ReactClassRef) {
-    this.reactClass = ReactClassRef
+    this.reactClass = ReactClassRef;
+    this.removeFileFromList = this.removeFileFromList.bind(this);
   }
 
   /**
@@ -21,15 +22,20 @@ export default class ReactActions {
    * @param {Object[]} fileList
    * @param {string} flag two possible flags `add` and `remove`
    */
-  objFilesReferenceAdder(fileName, flag) {
+  addFileToList(fileObj) {
     let fileList = this.reactClass.state.fileList.slice();
-    if(flag === 'add') {
-      fileList.push(fileName)
-    } else if(flag === 'remove') {
-      fileList = fileList.filter(item => item !== fileName)
-    }
+    fileList.push(fileObj)
     let newState = {...this.reactClass.state, fileList}
     this.reactClass.setState(newState)
+  }
+
+  removeFileFromList(fileObj) {
+    let fileList = this.reactClass.state.fileList;
+    fileObj.removeModelFromScene();
+    const index = fileList.indexOf(fileObj);
+    const newList =  fileList.splice(index, 1).slice();
+    let newState = {...this.reactClass.state, fileList : newList, activeModel : null};
+    this.reactClass.setState(newState);
   }
 
   setActiveModel (obj3d) {

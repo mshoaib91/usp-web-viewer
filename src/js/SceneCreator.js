@@ -5,8 +5,10 @@ import OrbitControls from 'three-orbit-controls';
 OBJLoader(THREE);
 var OC = OrbitControls(THREE);
 
+// js imports
 import ObjModelLoader from './Loaders/ObjModelLoader';
 import ModalWinOptions from './ModalWinOptions';
+import ModelFile from './ModelFile';
 import config from '../../config.json';
 
 let sceneCreatorInstance = null;
@@ -75,7 +77,7 @@ class SceneCreator {
   }
   
   addObjToScene(obj) {
-    this.ReactActions.objFilesReferenceAdder(obj.name, "add");
+    this.ReactActions.addFileToList(new ModelFile(obj.name, obj));
     this.ReactActions.setActiveModel(obj);
     this.scene.add(obj);
   }
@@ -148,10 +150,10 @@ class SceneCreator {
         }
         this.intersected = null;
         this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false));
-      }
-      /** render scene */
-      this.renderer.render(this.scene, this.camera);
+      } 
     }
+     /** render scene */
+     this.renderer.render(this.scene, this.camera);
   }
   
 }

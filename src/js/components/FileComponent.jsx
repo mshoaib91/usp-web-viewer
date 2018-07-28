@@ -20,7 +20,17 @@ export const FileComponent = (props) => {
               size="small"
               bordered={false}
               dataSource={props.fileList}
-              renderItem={item => (<List.Item actions={[<Icon type="eye" style={{color: "#43a047"}}/>, <Icon type="close" />]}>{item}</List.Item>)}  
+              renderItem={
+                modelFile => (
+                <List.Item 
+                  actions={[
+                    <Icon type="eye" style={{color: "#43a047"}}/>,
+                    <Icon type="close" onClick={() => {props.removeFile(modelFile)}}/>
+                  ]}>
+                  {modelFile.name}
+                </List.Item>
+              )
+              }  
             />
           </Col>
         </Row>
@@ -29,6 +39,8 @@ export const FileComponent = (props) => {
   );
 }
 
+
 FileComponent.propTypes = {
-  fileList : PropTypes.array
+  fileList : PropTypes.array,
+  removeFile : PropTypes.func 
 }

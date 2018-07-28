@@ -24,16 +24,16 @@ class App extends React.Component {
       fileList : [],
       activeModel: null,    // contains threejs `Object3D` object
     };
+    // React actions
+    this.reactActions = new ReactActions(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   
   componentDidMount() {
     window.addEventListener('resize', this.updateWindowDimensions);
     /** LEAVING REACT WORLD */
-    // React actions
-    const reactActions = new ReactActions(this);
     // injecting html element for threejs and react actions object
-    ThreeMain(this.threeRootElement, reactActions);
+    ThreeMain(this.threeRootElement, this.reactActions);
   }
   
   componentWillUnmount() {
@@ -49,7 +49,7 @@ class App extends React.Component {
             </div>
           </Col>
           <Col span={6} className='settings-panel'>
-            <SidePane fileList={this.state.fileList}/>
+            <SidePane fileList={this.state.fileList} removeFile={this.reactActions.removeFileFromList}/>
           </Col>
         </Row>
         <ModalWindow modalOptions={this.state.modalWindow}/>

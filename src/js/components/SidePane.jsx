@@ -24,6 +24,7 @@ class SidePane extends React.Component {
         upload : false
       }
     };
+    console.log('check this in sidepane', props.removeFile.prototype)
   }
 
   onMenuClick (menuType) {
@@ -49,7 +50,7 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList}/> : <h3>Dashboard</h3>}
+                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile}/> : <h3>Dashboard</h3>}
               </Col>
             </Row>
           </Col>
@@ -60,7 +61,8 @@ class SidePane extends React.Component {
 }
 
 SidePane.propTypes = {
-  fileList : PropTypes.array
+  fileList : PropTypes.array,
+  removeFile : PropTypes.func
 }
 
 export default SidePane;
