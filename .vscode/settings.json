@@ -1,0 +1,9 @@
+{
+    "eslint.packageManager": "yarn",
+    "editor.tabSize": 2,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/dist": true
+    }
+}

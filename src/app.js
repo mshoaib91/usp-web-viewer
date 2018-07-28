@@ -2,7 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
-import SidePane from './js/components/SidePane';
+import SidePane from './js/components/SidePane.jsx';
+import ModalWindow from './js/components/ModalWindow.jsx';
 
 // css import
 import 'antd/dist/antd.css';
@@ -10,7 +11,6 @@ import './sass/app.scss';
 
 // js import
 import ThreeMain from './js/ThreeMain';
-import ModalWindow from './js/components/ModalWindow';
 import ModalWinOptions from './js/ModalWinOptions';
 
 class App extends React.Component {

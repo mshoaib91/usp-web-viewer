@@ -1,6 +1,5 @@
 import React from 'react';
-import { Upload, Icon, message } from 'antd';
-import PropTypes from 'prop-types';
+import { Upload, Icon } from 'antd';
 import FileProcessor from '../FileProcessor';
 import SceneCreator from '../SceneCreator';
 
@@ -43,13 +42,6 @@ export const UploadComponent = (props) => {
         <p className="ant-upload-text">Click or drag file to this area to upload</p>
         <p className="ant-upload-hint">Please use <i>.zip</i> files containing the object file</p>
       </Dragger>
-      <ul>
-        {props.fileList.map((el, index) => <li key={index}>{el}</li>)}
-      </ul>
   </div>
   );
 }
-
-UploadComponent.propTypes = {
-  fileList : PropTypes.array
-};

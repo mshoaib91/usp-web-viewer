@@ -1,7 +1,7 @@
 /** created by shoaib khan on 01.07.2018 */
 import React from 'react';
-import {Row, Col, Button} from 'antd';
-import {UploadComponent} from './UploadComponent';
+import { Row, Col, Button } from 'antd';
+import { FileComponent } from './FileComponent.jsx';
 import config from '../../../config.json';
 import PropTypes from 'prop-types';
 
@@ -49,7 +49,7 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <UploadComponent fileList={this.props.fileList}/> : <h3>Dashboard</h3>}
+                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList}/> : <h3>Dashboard</h3>}
               </Col>
             </Row>
           </Col>
