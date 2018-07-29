@@ -4,7 +4,7 @@
     "defaultMtl" : "/objexamples/Demo.mtl"
   },
   "colors" : {
-    "scene_background" : "0xd6d6d6",
+    "scene_background" : "0xe4e4e4",
     "sidepanel_background" : "#f7f7f7"
   },
   "light" : {
