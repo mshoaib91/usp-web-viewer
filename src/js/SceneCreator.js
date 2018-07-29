@@ -78,7 +78,6 @@ class SceneCreator {
   
   addObjToScene(obj) {
     this.ReactActions.addFileToList(new ModelFile(obj.name, obj));
-    this.ReactActions.setActiveModel(obj);
     this.scene.add(obj);
   }
 

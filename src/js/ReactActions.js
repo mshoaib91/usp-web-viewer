@@ -18,28 +18,42 @@ export default class ReactActions {
   }
 
   /**
-   * Maintains the list of files that are in the scene
-   * @param {Object[]} fileList
-   * @param {string} flag two possible flags `add` and `remove`
+   * Add object to the list of files and set it to active
+   * 
+   * @param {Object} object of type `ModelFile`
    */
-  addFileToList(fileObj) {
-    let fileList = this.reactClass.state.fileList.slice();
+  addFileToList(fileObj) {    
+    let fileList = this.reactClass.state.fileList.slice();      // reactClass.state.fileList contains list of ModelFile objects
+    fileList.forEach(modelFile => modelFile.setActiveState(false));
     fileList.push(fileObj)
-    let newState = {...this.reactClass.state, fileList}
+    let newState = {...this.reactClass.state, fileList, activeModel : fileObj.model}
     this.reactClass.setState(newState)
   }
 
+  /**
+   * Remove the provided model and activate 
+   * another model if already in the scene
+   * 
+   * @param {object:ModelFile} fileObj
+   */
   removeFileFromList(fileObj) {
     let fileList = this.reactClass.state.fileList;
     fileObj.removeModelFromScene();
     const index = fileList.indexOf(fileObj);
     fileList.splice(index, 1)
-    let newState = {...this.reactClass.state, fileList, activeModel : null};
-    this.reactClass.setState(newState);
-  }
-
-  setActiveModel (obj3d) {
-    let newState = {...this.reactClass.state, activeModel : obj3d};
+    let newState = {}, activeModel = null;
+    if (fileObj.getActiveState() === true) {
+      if(fileList.length && fileList.length - 1 >= index) {
+        activeModel = fileList[index].model;
+        fileList[index].setActiveState(true);
+      } else if(fileList.length) {
+        activeModel = fileList[0].model;
+        fileList[0].setActiveState(true);
+      }
+      newState = {...this.reactClass.state, fileList, activeModel};
+    } else {
+      newState = {...this.reactClass.state, fileList};
+    }
     this.reactClass.setState(newState);
   }
 }
