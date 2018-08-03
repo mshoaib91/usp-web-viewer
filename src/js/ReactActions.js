@@ -4,6 +4,7 @@ export default class ReactActions {
   constructor(ReactClassRef) {
     this.reactClass = ReactClassRef;
     this.removeFileFromList = this.removeFileFromList.bind(this);
+    this.switchModel = this.switchModel.bind(this);
   }
 
   /**
@@ -55,5 +56,24 @@ export default class ReactActions {
       newState = {...this.reactClass.state, fileList};
     }
     this.reactClass.setState(newState);
+  }
+
+    /**
+   * Remove the provided model and activate 
+   * another model if already in the scene
+   * 
+   * @param {object:ModelFile} fileObj
+   */
+  switchModel (modelFileObj) {
+    let fileList = this.reactClass.state.fileList.slice();      // reactClass.state.fileList contains list of ModelFile objects
+    fileList.forEach(modelFile => {
+      if (modelFileObj.name !== modelFile.name) {
+        modelFile.setActiveState(false);
+      } else {
+        modelFile.setActiveState(true);
+      }
+    });
+    let newState = {...this.reactClass.state, fileList, activeModel : modelFileObj.model}
+    this.reactClass.setState(newState)
   }
 }

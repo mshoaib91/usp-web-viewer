@@ -8,6 +8,7 @@ export default function (threeElement, reactStateActions) {
   sc.setCamera();
   sc.setLighting();
   sc.addCameraToscene();
+  
   /** Loading model with materials */
   sc.LoadModelAndMtl(configs.paths.defaultObj, configs.paths.defaultMtl)
   .then(obj => {
@@ -19,12 +20,18 @@ export default function (threeElement, reactStateActions) {
     })
     sc.addObjToScene(obj);
   })
+  .catch((err) => {
+    console.log('failed to load object', err);
+  });
  
   /** Loading model without mtl */
   // sc.LoadModel(configs.paths.defaultObj)
   // .then(obj => {
   //   sc.addObjToScene(obj)
   // })
+   // .catch((err) => {
+  //   console.log('failed to load object', err);
+  // });
  
   /** Loading model with backface culling enabled */
   // sc.LoadModel(configs.paths.defaultObj)
@@ -37,7 +44,23 @@ export default function (threeElement, reactStateActions) {
   //   });
   //   sc.addObjToScene(obj);
   // })
+  // .catch((err) => {
+  //   console.log('failed to load object', err);
+  // });
 
+  /** Loading second model with materials */
+  sc.LoadModelAndMtl("/objexamples/key.obj", "/objexamples/key.mtl")
+  .then(obj => {
+    obj.name = "/objexamples/key.obj".split('/').pop();
+    obj.children.forEach(el => {
+      if (Array.isArray(el.material)) {
+        el.material = el.material.map(mtl => {
+          return new THREE.MeshPhongMaterial(mtl);
+        });
+      }
+    })
+    sc.addObjToScene(obj);
+  })
   .catch((err) => {
     console.log('failed to load object', err);
   });

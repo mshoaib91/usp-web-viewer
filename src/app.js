@@ -49,7 +49,9 @@ class App extends React.Component {
             </div>
           </Col>
           <Col span={6} className='settings-panel'>
-            <SidePane fileList={this.state.fileList} removeFile={this.reactActions.removeFileFromList}/>
+            <SidePane fileList={this.state.fileList} 
+            removeFile={this.reactActions.removeFileFromList} 
+            switchModel={this.reactActions.switchModel}/>
           </Col>
         </Row>
         <ModalWindow modalOptions={this.state.modalWindow}/>

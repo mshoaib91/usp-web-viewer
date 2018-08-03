@@ -24,7 +24,7 @@ export const FileComponent = (props) => {
                 modelFile => (
                 <List.Item 
                   actions={[
-                    <Icon type="eye" style={modelFile.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
+                    <Icon type="eye" onClick={() => {props.switchModel(modelFile)}} style={modelFile.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
                     <Icon type="close" onClick={() => {props.removeFile(modelFile)}}/>
                   ]}>
                   {modelFile.name}
@@ -42,5 +42,6 @@ export const FileComponent = (props) => {
 
 FileComponent.propTypes = {
   fileList : PropTypes.array,
-  removeFile : PropTypes.func 
+  removeFile : PropTypes.func,
+  switchModel : PropTypes.func
 }

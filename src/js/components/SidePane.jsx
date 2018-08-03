@@ -20,8 +20,8 @@ class SidePane extends React.Component {
     super(props);
     this.state = {
       menu : {
-        dashboard : true,
-        upload : false
+        dashboard : false,
+        upload : true
       }
     };
     console.log('check this in sidepane', props.removeFile.prototype)
@@ -50,7 +50,7 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile}/> : <h3>Dashboard</h3>}
+                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile} switchModel={this.props.switchModel}/> : <h3>Dashboard</h3>}
               </Col>
             </Row>
           </Col>
@@ -62,7 +62,8 @@ class SidePane extends React.Component {
 
 SidePane.propTypes = {
   fileList : PropTypes.array,
-  removeFile : PropTypes.func
+  removeFile : PropTypes.func,
+  switchModel : PropTypes.func
 }
 
 export default SidePane;
