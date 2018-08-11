@@ -13,10 +13,9 @@ const DraggerProps = {
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
-    .then(arraysObj => {
-      let {objBufferArr, nameArray} = arraysObj;
-      let objBuffer = objBufferArr[0];            // currently loading only one obj file in the zip
-      let fileName = nameArray[0];
+    .then(zipContents => {
+      let objBuffer = zipContents.obj.buffer;
+      let fileName = zipContents.obj.name;
       let objFile = new File([objBuffer], fileName);
       const objFileUrl = URL.createObjectURL(objFile);
       const sc = new SceneCreator();
