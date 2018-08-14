@@ -23,11 +23,11 @@ class FileProcessor {
       let promiseArray = new Array(3);
       let nameArray = new Array(3);
       for (var file in zipContents.files) {
-        if(file.match((/\.obj\b/)).length) {
+        if(file.match((/\.obj\b/)) !== null) {
           promiseArray[0] = (zip.file(file).async("arraybuffer"));
           nameArray[0] = (file);
         }
-        else if(file.match(/\.mlt\b/).length) {
+        else if(file.match(/\.mtl\b/) !== null) {
           promiseArray[1] = (zip.file(file).async("arraybuffer"));
           nameArray[1] = (file);
         }
@@ -46,7 +46,7 @@ class FileProcessor {
           buffer: null,
           name : null,
         },
-        mlt : {
+        mtl : {
           buffer : null,
           name : null,
         },
@@ -57,8 +57,8 @@ class FileProcessor {
           contents.obj.buffer = element;
           contents.obj.name = nameArray[index];
         } else if (index === 1) {
-          contents.mlt.buffer = element;
-          contents.mlt.name = nameArray[index];
+          contents.mtl.buffer = element;
+          contents.mtl.name = nameArray[index];
         }
       });
       return contents;

@@ -48,7 +48,7 @@ export default function (threeElement, reactStateActions) {
   //   console.log('failed to load object', err);
   // });
 
-  /** Loading second model with materials */
+  /** Loading second model with materials */                          //  todo : remove this. This is a test
   sc.LoadModelAndMtl("/objexamples/key.obj", "/objexamples/key.mtl")
   .then(obj => {
     obj.name = "/objexamples/key.obj".split('/').pop();

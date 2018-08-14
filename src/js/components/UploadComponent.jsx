@@ -18,13 +18,33 @@ const DraggerProps = {
       let fileName = zipContents.obj.name;
       let objFile = new File([objBuffer], fileName);
       const objFileUrl = URL.createObjectURL(objFile);
+      let mtlBuffer = zipContents.mtl.buffer, mtlName = zipContents.mtl.name;
       const sc = new SceneCreator();
-      sc.LoadModel(objFileUrl)
-      .then(obj => {
-        obj.name = fileName;
-        sc.addObjToScene(obj);
-      })
-      .catch(err => console.error(err));
+      if (mtlBuffer === null) {
+        sc.LoadModel(objFileUrl)
+        .then(obj => {
+          obj.name = fileName;
+          sc.addObjToScene(obj);
+        })
+        .catch(err => console.error(err));
+      } else {
+        let mtlFile = new File([mtlBuffer], mtlName);
+        const mtlFileUrl = URL.createObjectURL(mtlFile);
+        sc.LoadModelAndMtl(objFileUrl, mtlFileUrl)
+        .then((obj) => {
+          obj.name = fileName;
+          obj.children.forEach(el => {
+            if (Array.isArray(el.material)) {
+              el.material = el.material.map(mtl => {
+                return new THREE.MeshPhongMaterial(mtl);
+              });
+            }
+          })
+          sc.addObjToScene(obj);
+        })
+        .catch(err => console.error(err))
+
+      }
     })
     return false;
   },
