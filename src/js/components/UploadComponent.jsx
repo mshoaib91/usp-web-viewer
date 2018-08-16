@@ -2,6 +2,7 @@ import React from 'react';
 import { Upload, Icon } from 'antd';
 import FileProcessor from '../FileProcessor';
 import SceneCreator from '../SceneCreator';
+import { setNameAndMtls } from '../ThreeMain';
 
 
 const Dragger = Upload.Dragger;
@@ -14,17 +15,19 @@ const DraggerProps = {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
     .then(zipContents => {
-      let objBuffer = zipContents.obj.buffer;
-      let fileName = zipContents.obj.name;
-      let objFile = new File([objBuffer], fileName);
+      const objBuffer = zipContents.obj.buffer;
+      const fileName = zipContents.obj.name;
+      const objFile = new File([objBuffer], fileName);
       const objFileUrl = URL.createObjectURL(objFile);
-      let mtlBuffer = zipContents.mtl.buffer, mtlName = zipContents.mtl.name;
+      const mtlBuffer = zipContents.mtl.buffer;
+      const mtlName = zipContents.mtl.name;
+      const modelData = JSON.parse(zipContents.details.fileContent);
       const sc = new SceneCreator();
       if (mtlBuffer === null) {
         sc.LoadModel(objFileUrl)
         .then(obj => {
           obj.name = fileName;
-          sc.addObjToScene(obj);
+          sc.addObjToScene(obj, modelData);
         })
         .catch(err => console.error(err));
       } else {
@@ -32,15 +35,8 @@ const DraggerProps = {
         const mtlFileUrl = URL.createObjectURL(mtlFile);
         sc.LoadModelAndMtl(objFileUrl, mtlFileUrl)
         .then((obj) => {
-          obj.name = fileName;
-          obj.children.forEach(el => {
-            if (Array.isArray(el.material)) {
-              el.material = el.material.map(mtl => {
-                return new THREE.MeshPhongMaterial(mtl);
-              });
-            }
-          })
-          sc.addObjToScene(obj);
+          obj = setNameAndMtls(obj, fileName);
+          sc.addObjToScene(obj, modelData);
         })
         .catch(err => console.error(err))
 

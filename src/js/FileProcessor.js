@@ -31,6 +31,10 @@ class FileProcessor {
           promiseArray[1] = (zip.file(file).async("arraybuffer"));
           nameArray[1] = (file);
         }
+        else if (file.match(/(\.info\.json){1}$/) !== null) {
+          promiseArray[2] = (zip.file(file).async("string"));
+          nameArray[2] = (file);
+        }
       }
       return {promiseArray: Promise.all(promiseArray), nameArray} 
     }).then((arraysObj) => {
@@ -50,6 +54,10 @@ class FileProcessor {
           buffer : null,
           name : null,
         },
+        details : {
+          fileContent : null,
+          name : null,
+        }
       };
       let {objBufferArr, nameArray} = buffersObj;
       objBufferArr.forEach((element, index) => {
@@ -59,6 +67,9 @@ class FileProcessor {
         } else if (index === 1) {
           contents.mtl.buffer = element;
           contents.mtl.name = nameArray[index];
+        } else if (index === 2) {
+          contents.details.fileContent = element;
+          contents.details.name = nameArray[index];
         }
       });
       return contents;

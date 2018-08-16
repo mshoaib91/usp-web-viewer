@@ -77,7 +77,7 @@ class SceneCreator {
   }
   
   addObjToScene(obj, details = null) {
-    obj['modelDetails'] = details;
+    obj['ModelData'] = details;
     this.ReactActions.addFileToList(new ModelFile(obj.name, obj));
     this.scene.add(obj);
   }
@@ -134,7 +134,7 @@ class SceneCreator {
             this.intersected.material.emissive.setHex(0xff0000);
           }
         } 
-        let modelDetails = activeModel.modelDetails !== null ? activeModel.modelDetails[this.intersected.name] : null;
+        let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
         this.ReactActions.modalStateSetter(
           new ModalWinOptions()
           .setText(this.intersected.name)
