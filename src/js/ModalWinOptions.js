@@ -17,7 +17,7 @@ class ModalWinOptions {
   }
 
   setDetails(obj) {
-    if(obj !== undefined) {
+    if(obj !== undefined && obj !== null) {
       this.details = obj;
     }
     return this;

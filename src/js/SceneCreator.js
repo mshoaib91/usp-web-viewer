@@ -43,11 +43,6 @@ class SceneCreator {
     window.myscene = this.scene;  //todo : remove this
     window.myclass = this;        // todo : remove this
   }
-
-  setObjDetailsData (details) {
-    this.objDetails = details;
-    //console.log(details);
-  }
   
   onDocumentMouseMove(event) {
     this.mouse.x = (event.clientX / this.viewerWidth) * 2 - 1;
@@ -81,7 +76,8 @@ class SceneCreator {
     this.scene.add(this.camera);
   }
   
-  addObjToScene(obj) {
+  addObjToScene(obj, details = null) {
+    obj['modelDetails'] = details;
     this.ReactActions.addFileToList(new ModelFile(obj.name, obj));
     this.scene.add(obj);
   }
@@ -117,7 +113,7 @@ class SceneCreator {
     this.camera.lookAt(this.scene.position);
     /** Ray caster for selection highlighting */
     this.raycaster.setFromCamera(this.mouse, this.camera);
-    const activeModel = this.ReactActions.reactClass.state.activeModel;
+    var activeModel = this.ReactActions.reactClass.state.activeModel;
     if(activeModel !== undefined && activeModel !== null) {
       let intersects = this.raycaster.intersectObject(activeModel, true);
       if (intersects.length) {
@@ -138,13 +134,11 @@ class SceneCreator {
             this.intersected.material.emissive.setHex(0xff0000);
           }
         } 
-        if(!this.modalStateSetter) {
-          this.modalStateSetter = {}
-        }
+        let modelDetails = activeModel.modelDetails !== null ? activeModel.modelDetails[this.intersected.name] : null;
         this.ReactActions.modalStateSetter(
           new ModalWinOptions()
           .setText(this.intersected.name)
-          .setDetails(this.objDetails[this.intersected.name])
+          .setDetails(modelDetails)
           .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
           .setVisibility(true)
         );        

@@ -19,8 +19,7 @@ export default function (threeElement, reactStateActions) {
         return new THREE.MeshPhongMaterial(mtl);
       })
     })
-    sc.addObjToScene(obj);
-    sc.setObjDetailsData(objDetails);
+    sc.addObjToScene(obj, objDetails);
   })
   .catch((err) => {
     console.log('failed to load object', err);
