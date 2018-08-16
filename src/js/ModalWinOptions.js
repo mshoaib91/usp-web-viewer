@@ -3,6 +3,7 @@
 class ModalWinOptions {
   constructor(){ 
     this.text = '';
+    this.details = {};
     this.position = {
       x: 0,
       y : 0
@@ -12,6 +13,13 @@ class ModalWinOptions {
 
   setText(text) {
     this.text = text;
+    return this;
+  }
+
+  setDetails(obj) {
+    if(obj !== undefined) {
+      this.details = obj;
+    }
     return this;
   }
 

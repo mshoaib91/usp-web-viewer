@@ -28,7 +28,13 @@ class ModalWindow extends React.Component {
         right : options.position.x
       }}>
         <h4>Details:</h4>
-        <p>{options.text}</p>
+        <h6>{options.text}</h6>
+        <p>length : {options.details.len}</p>
+        <p>width : {options.details.width}</p>
+        <p>height : {options.details.height}</p>
+        <p>area : {options.details.area}</p>
+
+
       </div>
     )
   }
@@ -37,6 +43,7 @@ class ModalWindow extends React.Component {
 ModalWindow.propTypes = {
   modalOptions : PropTypes.shape({
     text : PropTypes.string,
+    details : PropTypes.object,
     position : PropTypes.object,
     visible : PropTypes.bool
   })

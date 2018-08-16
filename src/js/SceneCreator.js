@@ -43,6 +43,11 @@ class SceneCreator {
     window.myscene = this.scene;  //todo : remove this
     window.myclass = this;        // todo : remove this
   }
+
+  setObjDetailsData (details) {
+    this.objDetails = details;
+    //console.log(details);
+  }
   
   onDocumentMouseMove(event) {
     this.mouse.x = (event.clientX / this.viewerWidth) * 2 - 1;
@@ -133,9 +138,13 @@ class SceneCreator {
             this.intersected.material.emissive.setHex(0xff0000);
           }
         } 
+        if(!this.modalStateSetter) {
+          this.modalStateSetter = {}
+        }
         this.ReactActions.modalStateSetter(
           new ModalWinOptions()
           .setText(this.intersected.name)
+          .setDetails(this.objDetails[this.intersected.name])
           .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
           .setVisibility(true)
         );        

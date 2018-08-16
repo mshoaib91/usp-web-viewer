@@ -1,6 +1,7 @@
 /** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
+import objDetails from '../../objexamples/sample_obj_rot_info.json'
 import * as THREE from 'three';
 
 export default function (threeElement, reactStateActions) {
@@ -19,6 +20,7 @@ export default function (threeElement, reactStateActions) {
       })
     })
     sc.addObjToScene(obj);
+    sc.setObjDetailsData(objDetails);
   })
   .catch((err) => {
     console.log('failed to load object', err);
