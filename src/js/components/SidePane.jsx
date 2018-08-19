@@ -2,6 +2,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import { FileComponent } from './FileComponent.jsx';
+import { Dashboard } from './Dashboard.jsx';
 import config from '../../../config.json';
 import PropTypes from 'prop-types';
 
@@ -20,8 +21,8 @@ class SidePane extends React.Component {
     super(props);
     this.state = {
       menu : {
-        dashboard : false,
-        upload : true
+        dashboard : true,
+        upload : false
       }
     };
     console.log('check this in sidepane', props.removeFile.prototype)
@@ -50,7 +51,7 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile} switchModel={this.props.switchModel}/> : <h3>Dashboard</h3>}
+                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile} switchModel={this.props.switchModel}/> : <Dashboard modelData={this.props.modelData} />}
               </Col>
             </Row>
           </Col>
@@ -63,7 +64,8 @@ class SidePane extends React.Component {
 SidePane.propTypes = {
   fileList : PropTypes.array,
   removeFile : PropTypes.func,
-  switchModel : PropTypes.func
+  switchModel : PropTypes.func,
+  modelData : PropTypes.object
 }
 
 export default SidePane;

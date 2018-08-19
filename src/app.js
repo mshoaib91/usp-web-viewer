@@ -41,6 +41,7 @@ class App extends React.Component {
   }
   
   render() {
+    let modelData = this.state.activeModel ? this.state.activeModel.ModelData : {}
     return (
       <div style={{height: window.innerHeight}}>
         <Row style={{height: '100%'}}>
@@ -51,7 +52,9 @@ class App extends React.Component {
           <Col span={6} className='settings-panel'>
             <SidePane fileList={this.state.fileList} 
             removeFile={this.reactActions.removeFileFromList} 
-            switchModel={this.reactActions.switchModel}/>
+            switchModel={this.reactActions.switchModel}
+            modelData = {modelData}
+            />
           </Col>
         </Row>
         <ModalWindow modalOptions={this.state.modalWindow}/>
