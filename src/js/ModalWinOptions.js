@@ -2,6 +2,7 @@
 
 class ModalWinOptions {
   constructor(){ 
+    this.id = '',
     this.text = '';
     this.details = {};
     this.position = {
@@ -9,6 +10,11 @@ class ModalWinOptions {
       y : 0
     };
     this.visible= false
+  }
+
+  setId (id) {
+    this.id = id;
+    return this;
   }
 
   setText(text) {

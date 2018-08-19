@@ -10,6 +10,8 @@ export default class ReactActions {
   /**
    * set the modal window state i.e visibility, position and text to display
    * Modal window is the window that shows mesh information when hovered
+   * 
+   * @param {object} modalObj - Object of type ModalWinOptions.js
    */
   modalStateSetter(modalObj) {
     if(!(this.reactClass.state.modalWindow.visible === false && modalObj.visible === false)) {

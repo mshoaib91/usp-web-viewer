@@ -134,15 +134,20 @@ class SceneCreator {
             this.intersected.material.emissive.setHex(0xff0000);
           }
         } 
+        // get model details defined in *.info.json
         let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
-        this.ReactActions.modalStateSetter(
-          new ModalWinOptions()
+        // if mouse hovers on the new Object3Dmodel object which is differenciated by id which is object's name
+        if(this.ReactActions.reactClass.state.modalWindow.id !== this.intersected.name) {
+          const newWinOpions = new ModalWinOptions()
+          .setId(this.intersected.name)
           .setText(this.intersected.name)
           .setDetails(modelDetails)
           .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
-          .setVisibility(true)
-        );        
-      } else {
+          .setVisibility(true);
+          this.ReactActions.modalStateSetter(newWinOpions);
+        }
+
+      } else { // turn back color to default
         if (this.intersected) {
           if (Array.isArray(this.intersected.material)) {
             this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));

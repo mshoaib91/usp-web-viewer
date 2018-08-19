@@ -11,10 +11,14 @@ class BarChart extends React.Component {
     console.log("barchart data", props.data);
   }
   
-  // componentWillReceiveProps({ data }) {
-  //   this.drawGraph(data);
-  // }
-
+  shouldComponentUpdate({data}) {
+    return (data.length !== this.props.data.length);
+  }
+  
+  componentDidUpdate() {
+    this.updateGraph(this.props.data);
+  }
+  
   componentDidMount() {
     this.drawGraph(this.props.data);
   }
@@ -57,17 +61,23 @@ class BarChart extends React.Component {
     .attr("y", function(d) { return y(d.frequency); })
     .attr("width", x.bandwidth())
     .attr("height", function(d) { return height - y(d.frequency); });
-}
-
-render () {
-  return (
-  <Row>
-    <Col>
+  }
+  
+  updateGraph(data) {
+    d3.select("#barchart").select("svg").remove().exit();
+    this.drawGraph(data);
+    
+  }
+  
+  render () {
+    return (
+      <Row>
+      <Col>
       <div id="barchart" className="barchart"></div>
-    </Col>
-  </Row>
-);
-}
+      </Col>
+      </Row>
+    );
+  }
 }
 
 BarChart.propTypes = {
