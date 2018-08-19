@@ -6,8 +6,8 @@
     "Description" : "This Model is for test purpose"
   },
   "GraphData" : {
-    "PieChart" : {},
-    "Histogram" : [
+    "pieChart" : {},
+    "barchart" : [
       {
         "letter": "A",
         "frequency": ".08167"

@@ -6,14 +6,14 @@ import Barchart from './Barchart.jsx';
 
 
 export const Dashboard = (props) => {
-  let histogramData = props.modelData ? props.modelData.GraphData : null;
-  histogramData = histogramData ? histogramData.Histogram : [];
+  const graphData = props.modelData ? props.modelData.GraphData : null;
+  const barchart = graphData ? graphData.barchart : [];
   return (
     <Row>
       <Col>
         <Row>
           <Col>
-            <Barchart data={histogramData}/>
+            <Barchart data={barchart}/>
           </Col>
         </Row>
         <Row style={{marginTop:"20px"}}>
