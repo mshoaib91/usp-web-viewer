@@ -6,7 +6,7 @@
     "Description" : "This Model is for test purpose"
   },
   "GraphData" : {
-    "pieChart" : {},
+    "pieChart" : [],
     "barchart" : [
       {
         "letter": "A",

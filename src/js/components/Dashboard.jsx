@@ -2,7 +2,8 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 
-import Barchart from './Barchart.jsx';
+import BarChart from './BarChart.jsx';
+import PieChart from './PieChart.jsx';
 
 
 export const Dashboard = (props) => {
@@ -13,12 +14,12 @@ export const Dashboard = (props) => {
       <Col>
         <Row>
           <Col>
-            <Barchart data={barchart}/>
+            <BarChart data={barchart} />
           </Col>
         </Row>
         <Row style={{marginTop:"20px"}}>
           <Col>
-            
+            <PieChart data={barchart} />
           </Col>
         </Row>
       </Col>
