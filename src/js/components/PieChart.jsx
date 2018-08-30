@@ -30,7 +30,7 @@ class PieChart extends React.Component {
     radius = Math.min(width, height) / 2,
     g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     
-    var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var color = d3.scaleOrdinal(["#F23F54", "#AA8B39", "#3E4BAD", "#448F30", "#297A4A", "#9C33C5", "#2D882D"]);
     
     var pie = d3.pie()
     .sort(null)
