@@ -30,11 +30,14 @@ class PieChart extends React.Component {
     radius = Math.min(width, height) / 2,
     g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     
-    var color = d3.scaleOrdinal(["#F23F54", "#AA8B39", "#3E4BAD", "#448F30", "#297A4A", "#9C33C5", "#2D882D"]);
-    
+    //var color = d3.scaleOrdinal(["#FF7344", "#EF7674", "#EC5766", "#DA344D", "#C42348", "#C42331", "#C4230E"]);
+    var color = d3.scaleLinear()
+        .domain([1, data.length])
+        .range(['#b4c4df', '#1276b1'])
+        .interpolate(d3.interpolateHcl);
     var pie = d3.pie()
     .sort(null)
-    .value(function(d) { return d.frequency; });
+    .value(function(d) { return d.value; });
     
     var path = d3.arc()
     .outerRadius(radius - 10)
@@ -45,7 +48,7 @@ class PieChart extends React.Component {
     .innerRadius(radius - 40);
     
     data = data.map(d => {
-      d.frequency = +d.frequency;
+      d.value = +d.value;
       return d;
     });
     
@@ -56,12 +59,12 @@ class PieChart extends React.Component {
     
     arc.append("path")
     .attr("d", path)
-    .attr("fill", function(d) { return color(d.data.letter); });
+    .attr("fill", function(d) { return color(d.index); });
     
     arc.append("text")
     .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
     .attr("dy", "0.35em")
-    .text(function(d) { return d.data.letter; });
+    .text(function(d) { return d.data.label; });
   }
   
   updateGraph(data) {

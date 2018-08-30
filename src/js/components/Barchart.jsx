@@ -35,8 +35,8 @@ class BarChart extends React.Component {
     var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    x.domain(data.map(function(d) { return d.letter; }));
-    y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+    x.domain(data.map(function(d) { return d.label; }));
+    y.domain([0, d3.max(data, function(d) { return d.value; })]);
     
     g.append("g")
     .attr("class", "axis axis--x")
@@ -51,16 +51,16 @@ class BarChart extends React.Component {
     .attr("y", 6)
     .attr("dy", "0.71em")
     .attr("text-anchor", "end")
-    .text("Frequency");
+    .text("value");
     
     g.selectAll(".bar")
     .data(data)
     .enter().append("rect")
     .attr("class", "bar")
-    .attr("x", function(d) { return x(d.letter); })
-    .attr("y", function(d) { return y(d.frequency); })
+    .attr("x", function(d) { return x(d.label); })
+    .attr("y", function(d) { return y(d.value); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.frequency); });
+    .attr("height", function(d) { return height - y(d.value); });
   }
   
   updateGraph(data) {
