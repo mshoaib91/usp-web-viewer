@@ -1,0 +1,39 @@
+{
+  "ModelInformation" : {
+    "name" : "sample_rot",
+    "date" : "August 2018",
+    "Location" : "Munich Schwabing",
+    "Description" : "This Model is for test purpose"
+  },
+  "GraphData" : {
+    "pieChart" : [],
+    "barchart" : [
+      {
+        "label": "carbon",
+        "value": "23"
+      },
+      {
+        "label": "Iron",
+        "value": "35"
+      },
+      {
+        "label": "Stones",
+        "value": "37"
+      },
+      {
+        "label": "Water",
+        "value": "58"
+      },
+      {
+        "label": "Other",
+        "value": "12"
+      }
+    ] 
+  },
+  "keyobjectId": {
+    "len":82,
+    "width":79,
+    "height":31,
+    "area":200818
+    }
+  }

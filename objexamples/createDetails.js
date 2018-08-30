@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-fs.readFile('sample_rot.obj', 'utf8', (err, data) => {
+fs.readFile('key.obj', 'utf8', (err, data) => {
   var lines = data.split('\n');
   var newlines = lines.filter((line) => {
     return !!(line.match(/^(o )/) !== null);
@@ -20,7 +20,7 @@ fs.readFile('sample_rot.obj', 'utf8', (err, data) => {
       area : len * width * height
     }
   })
-  fs.writeFile("sample_obj_rote_nfo.json", JSON.stringify(obj), 'utf8', (err) => {
+  fs.writeFile("key.info.json", JSON.stringify(obj), 'utf8', (err) => {
     if(err) console.error(err)
   });
 });

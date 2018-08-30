@@ -597,6 +597,7 @@ vn 0.202278 0.000060 -0.979328
 vn 0.228332 0.690880 -0.685967
 s 1
 g pCube2
+o keyobjectId
 usemtl initialShadingGroup
 f 1/1/1 97/133/2 98/135/3 31/66/4
 s 2

@@ -1,7 +1,7 @@
 /** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
-import objDetails from '../../objexamples/sample_obj_rot.info.json'
+import objDetails from '../../objexamples/sample_rot.info.json'
 import * as THREE from 'three';
 
 export default function (threeElement, reactStateActions) {
@@ -45,14 +45,14 @@ export default function (threeElement, reactStateActions) {
   // });
 
   /** Loading second model with materials */                          //  todo : remove this. This is a test
-  sc.LoadModelAndMtl("/objexamples/key.obj", "/objexamples/key.mtl")
-  .then(obj => {
-    obj = setNameAndMtls(obj, "/objexamples/key.obj".split('/').pop())
-    sc.addObjToScene(obj);
-  })
-  .catch((err) => {
-    console.log('failed to load object', err);
-  });
+  // sc.LoadModelAndMtl("/objexamples/key.obj", "/objexamples/key.mtl")
+  // .then(obj => {
+  //   obj = setNameAndMtls(obj, "/objexamples/key.obj".split('/').pop())
+  //   sc.addObjToScene(obj);
+  // })
+  // .catch((err) => {
+  //   console.log('failed to load object', err);
+  // });
   
   sc.addControls();
   sc.initRender();

@@ -4,7 +4,7 @@
  * this class holds the reference of the Object3D models
  * that are added to the scene and their active states.
  */
-export default class ModelFile {
+export default class ModelContainer {
   /**
    * @param {string} name - name of the Object3D object 
    * @param {object} modelReference - Object3D object 

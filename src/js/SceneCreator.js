@@ -8,7 +8,7 @@ var OC = OrbitControls(THREE);
 // js imports
 import ObjModelLoader from './Loaders/ObjModelLoader';
 import ModalWinOptions from './ModalWinOptions';
-import ModelFile from './ModelFile';
+import ModelContainer from './ModelContainer';
 import config from '../../config.json';
 
 let sceneCreatorInstance = null;
@@ -78,7 +78,7 @@ class SceneCreator {
   
   addObjToScene(obj, details = null) {
     obj['ModelData'] = details;
-    this.ReactActions.addFileToList(new ModelFile(obj.name, obj));
+    this.ReactActions.addFileToList(new ModelContainer(obj.name, obj));
     this.scene.add(obj);
   }
 
