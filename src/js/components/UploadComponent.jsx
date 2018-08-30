@@ -15,6 +15,7 @@ const DraggerProps = {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
     .then(zipContents => {
+      console.log(zipContents);
       const objBuffer = zipContents.obj.buffer;
       const fileName = zipContents.obj.name;
       const objFile = new File([objBuffer], fileName);

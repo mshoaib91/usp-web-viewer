@@ -1,7 +1,7 @@
 /** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 import configs from '../../config.json';
-import objDetails from '../../objexamples/sample_rot.info.json'
+import objDetails from '../../objexamples/sample_rot_main.info.json'
 import * as THREE from 'three';
 
 export default function (threeElement, reactStateActions) {

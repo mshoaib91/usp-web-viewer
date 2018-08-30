@@ -20,59 +20,64 @@ class FileProcessor {
       return zip.loadAsync(buffer)
     })
     .then((zipContents) => {
-      let promiseArray = new Array(3);
-      let nameArray = new Array(3);
+      let promiseArray = [];
+      //let nameArray = new Array(3);
+      let files = {}
       for (var file in zipContents.files) {
         if(file.match((/\.obj\b/)) !== null) {
-          promiseArray[0] = (zip.file(file).async("arraybuffer"));
-          nameArray[0] = (file);
+          var arrayPos = promiseArray.push(zip.file(file).async("arraybuffer"));
+          const name = file.split('.obj')[0];
+          this.addFiles(files, name, 'obj', arrayPos - 1);
         }
         else if(file.match(/\.mtl\b/) !== null) {
-          promiseArray[1] = (zip.file(file).async("arraybuffer"));
-          nameArray[1] = (file);
+          var arrayPos = promiseArray.push(zip.file(file).async("arraybuffer"));
+          const name = file.split('.mtl')[0];
+          this.addFiles(files, name, 'mtl', arrayPos - 1);
         }
         else if (file.match(/(\.info\.json){1}$/) !== null) {
-          promiseArray[2] = (zip.file(file).async("string"));
-          nameArray[2] = (file);
+          var arrayPos = promiseArray.push(zip.file(file).async("string"));
+          const name = file.split('.info.json')[0];
+          this.addFiles(files, name, 'info', arrayPos - 1);
         }
       }
-      return {promiseArray: Promise.all(promiseArray), nameArray} 
+      return {promiseArray: Promise.all(promiseArray), files} 
     }).then((arraysObj) => {
       return new Promise((resolve, reject) => {
-        let {promiseArray, nameArray} = arraysObj;
-        promiseArray.then(objBufferArr => {
-          resolve({objBufferArr, nameArray});
-        });
+        let {promiseArray, files} = arraysObj;
+        promiseArray
+        .then(objBufferArr => {
+          resolve({objBufferArr, files});
+        })
+        .catch(ex => reject(ex));
       })
     }).then((buffersObj) => {
-      let contents = {
-        obj : {
-          buffer: null,
-          name : null,
-        },
-        mtl : {
-          buffer : null,
-          name : null,
-        },
-        details : {
-          fileContent : null,
-          name : null,
+      let {objBufferArr, files} = buffersObj;
+      // assigning back the objects their respective buffers from the array of buffers based on the index saved early
+      for(var fileName in files) {
+        const fileDetails = files[fileName]
+        for (var type in fileDetails) {
+          const arrIndex = fileDetails[type];
+          fileDetails[type] = objBufferArr[arrIndex];
         }
-      };
-      let {objBufferArr, nameArray} = buffersObj;
-      objBufferArr.forEach((element, index) => {
-        if(index === 0) {
-          contents.obj.buffer = element;
-          contents.obj.name = nameArray[index];
-        } else if (index === 1) {
-          contents.mtl.buffer = element;
-          contents.mtl.name = nameArray[index];
-        } else if (index === 2) {
-          contents.details.fileContent = element;
-          contents.details.name = nameArray[index];
+      }
+      console.log(files);
+      return files;
+    })
+    .then((fileStructure) => {    // fileStructure looks like {name: {obj: buffer, mtl: buffer, info: string}, name:{{obj: buffer, mtl: buffer, info: string}}}
+      for(var names in fileStructure) {
+        let bufferObj = fileStructure[names];
+        for(var type in bufferObj) { // types : mtl, obj, info
+          let buffer = bufferObj[type];
+          if(type === 'info') {
+            bufferObj[type] = JSON.parse(buffer);
+          } else {
+            const objFile = new File([buffer], names + '.' + type);
+            const objFileUrl = URL.createObjectURL(objFile);
+            bufferObj[type] = objFileUrl;
+          }
         }
-      });
-      return contents;
+      }
+      return fileStructure;
     })
     .catch(err => {
       console.error(err);
@@ -93,6 +98,15 @@ class FileProcessor {
         resolve(buffer);
       }
     });
+  }
+
+  addFiles(obj, fileName, fileType, content) {
+    if(!obj[fileName]) {
+      obj[fileName] = {}
+      obj[fileName][fileType] = content;
+    }else {
+      obj[fileName][fileType] = content;
+    } 
   }
 }
 

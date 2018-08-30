@@ -13,13 +13,33 @@ export default class ModelContainer {
     this.name = name;
     this.model = modelReference;
     this.active = true;
+    this.submodels = [];
   }
 
   /**
    * Removes the model from the scene
    */
   removeModelFromScene() {
+    this.removeAllSubModels()
     this.model.parent.remove(this.model);
+  }
+
+  removeSubModel(name) {
+    let filtered = this.submodels.filter(model => {
+      return model.name === name;
+    });
+    for(var i = 0 ; i < filtered.length ; i ++) {
+      let indx = this.submodels.indexOf(filtered[i]);
+      let modelToRemove = this.submodels.splice(indx, 1);
+      modelToRemove.removeAllSubModels();
+    }
+  }
+
+  removeAllSubModels() {
+    while (this.submodels.length > 0) {
+      let submodel = this.submodels.pop();
+      submodel.removeModelFromScene();
+    }
   }
 
   /**
@@ -37,5 +57,13 @@ export default class ModelContainer {
    */
   getActiveState() {
     return this.active;
+  }
+
+  /**
+   * child models associated with the main model
+   * @param {<ModelContainer>} subModel 
+   */
+  addSubModel (subModel) {
+    this.submodels.push(subModel);
   }
 }
