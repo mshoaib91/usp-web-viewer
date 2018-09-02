@@ -5,7 +5,6 @@ import SceneCreator from '../SceneCreator';
 import { setNameAndMtls } from '../ThreeMain';
 import ModelContainer from '../ModelContainer';
 
-
 const Dragger = Upload.Dragger;
 
 const DraggerProps = {
@@ -17,60 +16,37 @@ const DraggerProps = {
     fileProcessor.readZip(file)
     .then(zipContents => {
       loadModels(zipContents);
-      return;
-      const objBuffer = zipContents.obj.buffer;
-      const fileName = zipContents.obj.name;
-      const objFile = new File([objBuffer], fileName);
-      const objFileUrl = URL.createObjectURL(objFile);
-      const mtlBuffer = zipContents.mtl.buffer;
-      const mtlName = zipContents.mtl.name;
-      const modelData = JSON.parse(zipContents.details.fileContent);
-      const sc = new SceneCreator();
-      if (mtlBuffer === null) {
-        sc.LoadModel(objFileUrl)
-        .then(obj => {
-          obj.name = fileName;
-          sc.addObjToScene(obj, modelData);
-        })
-        .catch(err => console.error(err));
-      } else {
-        let mtlFile = new File([mtlBuffer], mtlName);
-        const mtlFileUrl = URL.createObjectURL(mtlFile);
-        sc.LoadModelAndMtl(objFileUrl, mtlFileUrl)
-        .then((obj) => {
-          obj = setNameAndMtls(obj, fileName);
-          sc.addObjToScene(obj, modelData);
-        })
-        .catch(err => console.error(err))
-
-      }
     })
     return false;
-  },
-  
+  },  
 };
 
 /**
  * Extract the file contents from the object and load it to the scene
  * 
- * @param {Object} zipContents 
+ * @param {Object} zipContents - looks like  `[{name: name, content: {obj: buffer, mtl: buffer, info: string}}, {name:name, content:{obj: buffer, mtl: buffer, info: string}}]`
  */
 function loadModels (zipContents) {
   // first load Main model and then load sub models
   const mainFileObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') > -1);
   const subFilesObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') < 0);
   console.log(zipContents);
-  console.log('mainFile', mainFileObj);
-  console.log('subfiles', subFilesObj);
 
   let mainObj = mainFileObj[0].content.obj;
   let mainMtl = mainFileObj[0].content.mtl;
   let info = mainFileObj[0].content.info;
   let name = mainFileObj[0].name;
-  
+  // loading main Object3D file and its information
   let mainModelContainer = loadFileToScene(mainObj, mainMtl, name, info, null);
+  // loading sub Object3S files that belongs to main file
+  subFilesObj.forEach(element => {
+    let subObj = element.content.obj;
+    let subMtl = element.content.mtl;
+    let info = element.content.info;
+    let name = element.name;
+    loadFileToScene(subObj, subMtl, name, null, mainModelContainer);
+  });
 }
-
 
 /**
  * @private
@@ -113,6 +89,11 @@ function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContainer) {
   return mainModelContainerObj
 }
 
+/**
+ * Main Jsx component
+ * 
+ * @param {ReactComponent} props 
+ */
 export const UploadComponent = (props) => {
   return (
     <div>
