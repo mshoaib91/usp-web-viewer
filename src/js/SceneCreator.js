@@ -96,7 +96,7 @@ class SceneCreator {
    * reference in the main object which is of type ModelContainer
    * 
    * @param {object} subObj - object of type Object3D 
-   * @param {object} mainModelContainer - object of type ModelContainer of the main object in the combined objects scene
+   * @param {object} mainModelContainer - object of type `ModelContainer` of the main object in the combined objects scene
    */
   addSubObjectToScene(subObj, mainModelContainer) {
     let subModelContainer = new ModelContainer(subObj.name, obj);

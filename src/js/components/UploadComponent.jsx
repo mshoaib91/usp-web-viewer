@@ -3,6 +3,7 @@ import { Upload, Icon } from 'antd';
 import FileProcessor from '../FileProcessor';
 import SceneCreator from '../SceneCreator';
 import { setNameAndMtls } from '../ThreeMain';
+import ModelContainer from '../ModelContainer';
 
 
 const Dragger = Upload.Dragger;
@@ -49,6 +50,11 @@ const DraggerProps = {
   
 };
 
+/**
+ * Extract the file contents from the object and load it to the scene
+ * 
+ * @param {Object} zipContents 
+ */
 function loadModels (zipContents) {
   // first load Main model and then load sub models
   const mainFileObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') > -1);
@@ -57,27 +63,54 @@ function loadModels (zipContents) {
   console.log('mainFile', mainFileObj);
   console.log('subfiles', subFilesObj);
 
-  const sc = new SceneCreator();    // get instance of SceneCreator Object
   let mainObj = mainFileObj[0].content.obj;
   let mainMtl = mainFileObj[0].content.mtl;
   let info = mainFileObj[0].content.info;
   let name = mainFileObj[0].name;
   
-  if (mainMtl === null || mainMtl === undefined) {
-    sc.LoadModel(mainObj)
-    .then(obj => {
-      obj.name = name;
-      sc.addObjToScene(obj, info);
+  let mainModelContainer = loadFileToScene(mainObj, mainMtl, name, info, null);
+}
+
+
+/**
+ * @private
+ * Load `.obj` files as a THREE.Object3D model and add it to the scene
+ * as either main model or sub model of the main model
+ *  
+ * @param {File} objFile - file referencing `.obj` file 
+ * @param {File} mtlFile - file referencing `.mtl` file 
+ * @param {string} name - name of the obj
+ * @param {Object} infoObj - Object containing information related to polygons and graphs 
+ * @param {ModelContainer|null} mainModelContainer - ModelContainer object containing the main Object3D model 
+ * @returns {ModelContainer|null} - returns the `ModelContainer` object of main model or null in case of submodel is added
+ */
+function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContainer) {
+  const sc = new SceneCreator();    // get instance of SceneCreator Object
+  let mainModelContainerObj = null;
+  if (mtlFile === null || mtlFile === undefined) {
+    sc.LoadModel(objFile)
+    .then(obj3D => {
+      obj3D.name = name;
+      if(!mainModelContainer && mainModelContainer !== null) {
+        sc.addSubObjectToScene(obj3D, mainModelContainer);
+      } else {
+        mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
+      }
     })
     .catch(err => console.error(err));
   } else {
-    sc.LoadModelAndMtl(mainObj, mainMtl)
-    .then((obj) => {
-      obj = setNameAndMtls(obj, name);
-      sc.addObjToScene(obj, info);
+    sc.LoadModelAndMtl(objFile, mtlFile)
+    .then((obj3D) => {
+      obj3D = setNameAndMtls(obj3D, name);
+      if(!mainModelContainer && mainModelContainer !== null) {
+        sc.addSubObjectToScene(obj3D, mainModelContainer);
+      } else {
+        mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
+      }
     })
     .catch(err => console.error(err))
   }
+  return mainModelContainerObj
 }
 
 export const UploadComponent = (props) => {
