@@ -60,10 +60,10 @@ class FileProcessor {
           fileDetails[type] = objBufferArr[arrIndex];
         }
       }
-      console.log(files);
       return files;
     })
-    .then((fileStructure) => {    // fileStructure looks like {name: {obj: buffer, mtl: buffer, info: string}, name:{{obj: buffer, mtl: buffer, info: string}}}
+    .then((fileStructure) => {
+      // fileStructure looks like {name: {obj: buffer, mtl: buffer, info: string}, name:{{obj: buffer, mtl: buffer, info: string}}}
       for(var names in fileStructure) {
         let bufferObj = fileStructure[names];
         for(var type in bufferObj) { // types : mtl, obj, info
@@ -78,6 +78,18 @@ class FileProcessor {
         }
       }
       return fileStructure;
+    })
+    .then((fileStructure) => {
+      // converting object to array
+      let files = []
+      for (var fileName in fileStructure) {
+        let content = {
+          name: fileName,
+          content: fileStructure[fileName]
+        }
+        files.push(content);
+      }
+      return files;
     })
     .catch(err => {
       console.error(err);

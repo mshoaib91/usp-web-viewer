@@ -15,7 +15,8 @@ const DraggerProps = {
     let fileProcessor = new FileProcessor();
     fileProcessor.readZip(file)
     .then(zipContents => {
-      console.log(zipContents);
+      loadModels(zipContents);
+      return;
       const objBuffer = zipContents.obj.buffer;
       const fileName = zipContents.obj.name;
       const objFile = new File([objBuffer], fileName);
@@ -47,6 +48,15 @@ const DraggerProps = {
   },
   
 };
+
+function loadModels (zipContents) {
+  // first load Main model and then load sub models
+  const mainFileObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') > -1);
+  const subFilesObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') < 0);
+  console.log(zipContents);
+  console.log('mainFile', mainFileObj);
+  console.log('subfiles', subFilesObj);
+}
 
 export const UploadComponent = (props) => {
   return (
