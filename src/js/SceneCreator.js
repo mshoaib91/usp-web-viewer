@@ -81,7 +81,7 @@ class SceneCreator {
    * 
    * @param {object} obj - Object3D object
    * @param {object} details - object containing the details of the polygons and graph informaiton
-   * @returns {<ModelContainer>} mainModel - ModelContainer object of the main model
+   * @returns {ModelContainer} mainModel - ModelContainer object of the main model
    */
   addObjToScene(obj, details = null) {
     obj['ModelData'] = details;
@@ -96,13 +96,12 @@ class SceneCreator {
    * reference in the main object which is of type ModelContainer
    * 
    * @param {object} subObj - object of type Object3D 
-   * @param {object} mainModelContainer - object of type `ModelContainer` of the main object in the combined objects scene
+   * @param {ModelContainer} mainModelContainer - object of type `ModelContainer` of the main object in the combined objects scene
    */
   addSubObjectToScene(subObj, mainModelContainer) {
-    let subModelContainer = new ModelContainer(subObj.name, obj);
-    // this.ReactActions.addFileToList(subModelContainer);
+    let subModelContainer = new ModelContainer(subObj.name, subObj);
     mainModelContainer.addSubModel(subModelContainer);
-    // refresh react state if it does not.
+    this.scene.add(subObj);
   }
 
   

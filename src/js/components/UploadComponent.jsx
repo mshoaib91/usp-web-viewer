@@ -17,6 +17,7 @@ const DraggerProps = {
     .then(zipContents => {
       loadModels(zipContents);
     })
+    .catch(ex => console.error(ex));
     return false;
   },  
 };
@@ -26,7 +27,7 @@ const DraggerProps = {
  * 
  * @param {Object} zipContents - looks like  `[{name: name, content: {obj: buffer, mtl: buffer, info: string}}, {name:name, content:{obj: buffer, mtl: buffer, info: string}}]`
  */
-function loadModels (zipContents) {
+async function loadModels (zipContents) {
   // first load Main model and then load sub models
   const mainFileObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') > -1);
   const subFilesObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') < 0);
@@ -37,15 +38,19 @@ function loadModels (zipContents) {
   let info = mainFileObj[0].content.info;
   let name = mainFileObj[0].name;
   // loading main Object3D file and its information
-  let mainModelContainer = loadFileToScene(mainObj, mainMtl, name, info, null);
+  let mainModelContainer = await loadFileToScene(mainObj, mainMtl, name, info, null);
   // loading sub Object3S files that belongs to main file
+  let promsiseArr = [];
   subFilesObj.forEach(element => {
     let subObj = element.content.obj;
     let subMtl = element.content.mtl;
     let info = element.content.info;
     let name = element.name;
-    loadFileToScene(subObj, subMtl, name, null, mainModelContainer);
+    promsiseArr.push(loadFileToScene(subObj, subMtl, name, null, mainModelContainer));
   });
+  promsiseArr.then(obj => {
+    console.log('models loaded', obj);
+  })
 }
 
 /**
@@ -60,33 +65,27 @@ function loadModels (zipContents) {
  * @param {ModelContainer|null} mainModelContainer - ModelContainer object containing the main Object3D model 
  * @returns {ModelContainer|null} - returns the `ModelContainer` object of main model or null in case of submodel is added
  */
-function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContainer) {
+async function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContainer) {
   const sc = new SceneCreator();    // get instance of SceneCreator Object
   let mainModelContainerObj = null;
   if (mtlFile === null || mtlFile === undefined) {
-    sc.LoadModel(objFile)
-    .then(obj3D => {
-      obj3D.name = name;
-      if(!mainModelContainer && mainModelContainer !== null) {
-        sc.addSubObjectToScene(obj3D, mainModelContainer);
-      } else {
-        mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
-      }
-    })
-    .catch(err => console.error(err));
+    let obj3D = await sc.LoadModel(objFile);
+    obj3D.name = name;
+    if(!mainModelContainer) {
+      mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
+    } else {
+      sc.addSubObjectToScene(obj3D, mainModelContainer);
+    }
   } else {
-    sc.LoadModelAndMtl(objFile, mtlFile)
-    .then((obj3D) => {
-      obj3D = setNameAndMtls(obj3D, name);
-      if(!mainModelContainer && mainModelContainer !== null) {
-        sc.addSubObjectToScene(obj3D, mainModelContainer);
-      } else {
-        mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
-      }
-    })
-    .catch(err => console.error(err))
+    let obj3D = await sc.LoadModelAndMtl(objFile, mtlFile);
+    obj3D = setNameAndMtls(obj3D, name);
+    if(!mainModelContainer) {
+      mainModelContainerObj = sc.addObjToScene(obj3D, infoObj);
+    } else {
+      sc.addSubObjectToScene(obj3D, mainModelContainer);
+    }
   }
-  return mainModelContainerObj
+  return mainModelContainerObj;
 }
 
 /**
