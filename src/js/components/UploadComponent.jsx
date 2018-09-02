@@ -56,6 +56,28 @@ function loadModels (zipContents) {
   console.log(zipContents);
   console.log('mainFile', mainFileObj);
   console.log('subfiles', subFilesObj);
+
+  const sc = new SceneCreator();    // get instance of SceneCreator Object
+  let mainObj = mainFileObj[0].content.obj;
+  let mainMtl = mainFileObj[0].content.mtl;
+  let info = mainFileObj[0].content.info;
+  let name = mainFileObj[0].name;
+  
+  if (mainMtl === null || mainMtl === undefined) {
+    sc.LoadModel(mainObj)
+    .then(obj => {
+      obj.name = name;
+      sc.addObjToScene(obj, info);
+    })
+    .catch(err => console.error(err));
+  } else {
+    sc.LoadModelAndMtl(mainObj, mainMtl)
+    .then((obj) => {
+      obj = setNameAndMtls(obj, name);
+      sc.addObjToScene(obj, info);
+    })
+    .catch(err => console.error(err))
+  }
 }
 
 export const UploadComponent = (props) => {

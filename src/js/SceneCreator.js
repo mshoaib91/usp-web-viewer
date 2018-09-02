@@ -76,10 +76,33 @@ class SceneCreator {
     this.scene.add(this.camera);
   }
   
+  /**
+   * Add the main object to the scene
+   * 
+   * @param {object} obj - Object3D object
+   * @param {object} details - object containing the details of the polygons and graph informaiton
+   * @returns {<ModelContainer>} mainModel - ModelContainer object of the main model
+   */
   addObjToScene(obj, details = null) {
     obj['ModelData'] = details;
-    this.ReactActions.addFileToList(new ModelContainer(obj.name, obj));
+    let mainModel = new ModelContainer(obj.name, obj)
+    this.ReactActions.addFileToList(mainModel);
     this.scene.add(obj);
+    return mainModel;
+  }
+
+  /**
+   * Add the sub ojbect to the scene. and also maintaining the 
+   * reference in the main object which is of type ModelContainer
+   * 
+   * @param {object} subObj - object of type Object3D 
+   * @param {object} mainModelContainer - object of type ModelContainer of the main object in the combined objects scene
+   */
+  addSubObjectToScene(subObj, mainModelContainer) {
+    let subModelContainer = new ModelContainer(subObj.name, obj);
+    // this.ReactActions.addFileToList(subModelContainer);
+    mainModelContainer.addSubModel(subModelContainer);
+    // refresh react state if it does not.
   }
 
   

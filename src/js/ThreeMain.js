@@ -64,6 +64,11 @@ export default function (threeElement, reactStateActions) {
   animate();
 }
 
+/**
+ * Set name of the object and create the mtl of each object
+ * as a separate object so that on raytracing each mtl will 
+ * be considered separately and not as a sigle entity.
+ */
 export function setNameAndMtls (obj, name) {
   obj.name = name;
   obj.children.forEach(el => {
