@@ -32,6 +32,9 @@ async function loadModels (zipContents) {
   const mainFileObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') > -1);
   const subFilesObj = zipContents.filter(fileObj => fileObj.name.indexOf('main') < 0);
   console.log(zipContents);
+  if (!mainFileObj.length) {
+    throw new Error('Main file not defined. Please include "main" in the name of main .obj file');
+  }
 
   let mainObj = mainFileObj[0].content.obj;
   let mainMtl = mainFileObj[0].content.mtl;

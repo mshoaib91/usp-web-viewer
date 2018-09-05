@@ -84,10 +84,13 @@ class SceneCreator {
    * @returns {ModelContainer} mainModel - ModelContainer object of the main model
    */
   addObjToScene(obj, details = null) {
-    obj['ModelData'] = details;
-    let mainModel = new ModelContainer(obj.name, obj)
+    var group = new THREE.Group();
+    group.name = obj.name + 'group';
+    group.add(obj);
+    group['ModelData'] = details;
+    let mainModel = new ModelContainer(group.name, group);
     this.ReactActions.addFileToList(mainModel);
-    this.scene.add(obj);
+    this.scene.add(group);
     return mainModel;
   }
 
@@ -101,7 +104,8 @@ class SceneCreator {
   addSubObjectToScene(subObj, mainModelContainer) {
     let subModelContainer = new ModelContainer(subObj.name, subObj);
     mainModelContainer.addSubModel(subModelContainer);
-    this.scene.add(subObj);
+    let group = mainModelContainer.model;
+    group.add(subObj);
   }
 
   
