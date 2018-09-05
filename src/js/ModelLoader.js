@@ -1,5 +1,5 @@
 import SceneCreator from './SceneCreator';
-import { setNameAndMtls } from './ThreeMain';
+import * as THREE from 'three';
 
 /**
  * Extract the file contents from the object and load it to the scene
@@ -70,14 +70,30 @@ async function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContain
   return mainModelContainerObj;
 }
 
+/**
+ * Set name of the object and create the mtl of each object
+ * as a separate object so that on raytracing each mtl will 
+ * be considered separately and not as a sigle entity.
+ */
+function setNameAndMtls (obj, name) {
+  obj.name = name;
+  obj.children.forEach(el => {
+    if (Array.isArray(el.material)) {
+      el.material = el.material.map(mtl => {
+        return new THREE.MeshPhongMaterial(mtl);
+      });
+    }
+  });
+  return obj;
+}
 
 export class ModelLoaderStructure {
   /**
    * This class is the structure that is required by `ModelLoader.loadModels` method
    * 
    * @param {string} name 
-   * @param {blob} obj - File blob of obj file 
-   * @param {blob} mtl - File blob of mtl file
+   * @param {string|blob} obj - File path or blob of obj file 
+   * @param {string|blob} mtl - File path or blob of mtl file
    * @param {object} info - JSON object
    */
   constructor(name, obj, mtl=null, info=null) {

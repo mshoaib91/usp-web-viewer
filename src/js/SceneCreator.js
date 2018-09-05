@@ -85,7 +85,7 @@ class SceneCreator {
    */
   addObjToScene(obj, details = null) {
     var group = new THREE.Group();
-    group.name = obj.name + 'group';
+    group.name = obj.name + '_group';
     group.add(obj);
     group['ModelData'] = details;
     let mainModel = new ModelContainer(group.name, group);
