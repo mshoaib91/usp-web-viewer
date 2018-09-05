@@ -1,6 +1,7 @@
 /** created by shoaib khan on 07.07.2018 */
 
 import JSZip from 'jszip';
+import { ModelLoaderStructure } from './ModelLoader';
 
 /**
  * This class processes the uploaded zip file,
@@ -83,11 +84,9 @@ class FileProcessor {
       // converting object to array
       let files = []
       for (var fileName in fileStructure) {
-        let content = {
-          name: fileName,
-          content: fileStructure[fileName]
-        }
-        files.push(content);
+        let content = fileStructure[fileName];
+        let modelLoaderStructure = new ModelLoaderStructure(fileName, content.obj, content.mtl, content.info);
+        files.push(modelLoaderStructure);
       }
       return files;
     })

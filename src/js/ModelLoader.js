@@ -4,7 +4,7 @@ import { setNameAndMtls } from './ThreeMain';
 /**
  * Extract the file contents from the object and load it to the scene
  * 
- * @param {Object} fileContents - looks like `[{name: name, content: {obj: blob, mtl: blob, info: string}}, {name:name, content:{obj: blob, mtl: blob, info: string}}]`
+ * @param {ModelLoaderStructure[]} fileContents - looks like `[{name: name, content: {obj: blob, mtl: blob, info: string}}, {name:name, content:{obj: blob, mtl: blob, info: string}}]`
  */
 export async function loadModels (fileContents) {
   // first load Main model and then load sub models
@@ -68,4 +68,24 @@ async function loadFileToScene(objFile, mtlFile, name, infoObj, mainModelContain
     }
   }
   return mainModelContainerObj;
+}
+
+
+export class ModelLoaderStructure {
+  /**
+   * This class is the structure that is required by `ModelLoader.loadModels` method
+   * 
+   * @param {string} name 
+   * @param {blob} obj - File blob of obj file 
+   * @param {blob} mtl - File blob of mtl file
+   * @param {object} info - JSON object
+   */
+  constructor(name, obj, mtl=null, info=null) {
+    this.name = name,
+    this.content = {
+      obj: obj,
+      mtl: mtl,
+      info: info
+    }
+  }
 }
