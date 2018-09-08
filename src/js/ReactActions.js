@@ -5,6 +5,8 @@ export default class ReactActions {
     this.reactClass = ReactClassRef;
     this.removeFileFromList = this.removeFileFromList.bind(this);
     this.switchModel = this.switchModel.bind(this);
+    this.switchSubModel = this.switchSubModel.bind(this);
+    this.resetReactState = this.resetReactState.bind(this);
   }
 
   /**
@@ -63,6 +65,11 @@ export default class ReactActions {
       newState = {...this.reactClass.state, fileList};
     }
     this.reactClass.setState(newState);
+  }
+
+  switchSubModel (modelContainer) {
+    modelContainer.setActiveState(!modelContainer.getActiveState());
+    this.reactClass.setState({...this.reactClass.state});
   }
 
     /**

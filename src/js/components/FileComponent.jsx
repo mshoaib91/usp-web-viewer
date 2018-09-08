@@ -27,7 +27,7 @@ export const FileComponent = (props) => {
                     <Icon type="eye" onClick={() => {props.switchModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
                     <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
                   ]}>
-                  <List.Item.Meta title={modelContainer.name} description={subList(modelContainer.submodels)}/>
+                  <List.Item.Meta title={modelContainer.name} description={subList(modelContainer.submodels, props)}/>
                   {/* {subList(modelContainer.submodels)} */}
                 </List.Item>
               )
@@ -40,7 +40,7 @@ export const FileComponent = (props) => {
   );
 }
 
-function subList(fileList) {
+function subList(fileList, props) {
   return (
     <Row>
       <Col>
@@ -52,8 +52,8 @@ function subList(fileList) {
             modelContainer => (
             <List.Item 
               actions={[
-                <Icon type="eye" onClick={() => {props.switchModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
-                <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
+                <Icon type="check" onClick={() => {props.switchSubModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
+                // <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
               ]}>
               {modelContainer.name}
             </List.Item>
@@ -69,5 +69,6 @@ function subList(fileList) {
 FileComponent.propTypes = {
   fileList : PropTypes.array,
   removeFile : PropTypes.func,
-  switchModel : PropTypes.func
+  switchModel : PropTypes.func,
+  switchSubModel: PropTypes.func
 }

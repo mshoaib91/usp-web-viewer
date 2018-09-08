@@ -53,6 +53,7 @@ class App extends React.Component {
             <SidePane fileList={this.state.fileList} 
             removeFile={this.reactActions.removeFileFromList} 
             switchModel={this.reactActions.switchModel}
+            switchSubModel={this.reactActions.switchSubModel}
             modelData = {modelData}
             />
           </Col>

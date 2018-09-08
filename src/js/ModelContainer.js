@@ -14,6 +14,7 @@ export default class ModelContainer {
     this.model = modelReference;
     this.active = true;
     this.submodels = [];
+    this.parent = null;
   }
 
   /**
@@ -64,6 +65,19 @@ export default class ModelContainer {
    * @param {<ModelContainer>} subModel 
    */
   addSubModel (subModel) {
+    this.setParent(subModel);
     this.submodels.push(subModel);
+  }
+
+  /**
+   * @private
+   * @param {ModelContainer} subModel 
+   */
+  setParent (subModel) {
+    subModel.parent = this;
+  }
+
+  getParent () {
+    return this.parent;
   }
 }

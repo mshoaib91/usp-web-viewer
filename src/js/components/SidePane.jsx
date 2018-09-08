@@ -51,7 +51,12 @@ class SidePane extends React.Component {
             </Row>
             <Row>
               <Col>
-                {this.state.menu.upload ? <FileComponent fileList={this.props.fileList} removeFile={this.props.removeFile} switchModel={this.props.switchModel}/> : <Dashboard modelData={this.props.modelData} />}
+    {this.state.menu.upload ? 
+      (<FileComponent fileList={this.props.fileList} 
+      removeFile={this.props.removeFile} 
+      switchModel={this.props.switchModel}
+      switchSubModel={this.props.switchSubModel}/>)
+       : <Dashboard modelData={this.props.modelData} />}
               </Col>
             </Row>
           </Col>
@@ -65,6 +70,7 @@ SidePane.propTypes = {
   fileList : PropTypes.array,
   removeFile : PropTypes.func,
   switchModel : PropTypes.func,
+  switchSubModel: PropTypes.func,
   modelData : PropTypes.object
 }
 
