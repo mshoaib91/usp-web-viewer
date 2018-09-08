@@ -106,6 +106,7 @@ class SceneCreator {
     mainModelContainer.addSubModel(subModelContainer);
     let group = mainModelContainer.model;
     group.add(subObj);
+    this.ReactActions.resetReactState();
   }
 
   

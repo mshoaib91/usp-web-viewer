@@ -15,19 +15,20 @@ export const FileComponent = (props) => {
         </Row>
         <Row style={{marginTop:"20px"}}>
           <Col>
-            <List 
+            <List
               header={<h3>Loaded Models</h3>}
               size="small"
               bordered={false}
               dataSource={props.fileList}
               renderItem={
-                modelFile => (
+                modelContainer => (
                 <List.Item 
                   actions={[
-                    <Icon type="eye" onClick={() => {props.switchModel(modelFile)}} style={modelFile.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
-                    <Icon type="close" onClick={() => {props.removeFile(modelFile)}}/>
+                    <Icon type="eye" onClick={() => {props.switchModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
+                    <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
                   ]}>
-                  {modelFile.name}
+                  <List.Item.Meta title={modelContainer.name} description={subList(modelContainer.submodels)}/>
+                  {/* {subList(modelContainer.submodels)} */}
                 </List.Item>
               )
               }  
@@ -37,6 +38,31 @@ export const FileComponent = (props) => {
       </Col>
     </Row>
   );
+}
+
+function subList(fileList) {
+  return (
+    <Row>
+      <Col>
+        <List 
+          size="small"
+          bordered={false}
+          dataSource={fileList}
+          renderItem={
+            modelContainer => (
+            <List.Item 
+              actions={[
+                <Icon type="eye" onClick={() => {props.switchModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
+                <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
+              ]}>
+              {modelContainer.name}
+            </List.Item>
+          )
+          }
+        />
+      </Col>
+    </Row>
+  )
 }
 
 

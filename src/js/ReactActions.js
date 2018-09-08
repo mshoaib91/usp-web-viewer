@@ -33,6 +33,11 @@ export default class ReactActions {
     this.reactClass.setState(newState)
   }
 
+  resetReactState() {
+    let newState = {...this.reactClass.state};
+    this.reactClass.setState(newState);
+  }
+
   /**
    * Remove the provided model and activate 
    * another model if already in the scene
