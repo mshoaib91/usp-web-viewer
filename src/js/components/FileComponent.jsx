@@ -52,7 +52,7 @@ function subList(fileList, props) {
             modelContainer => (
             <List.Item 
               actions={[
-                <Icon type="check" onClick={() => {props.switchSubModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
+                <Icon type="check" onClick={() => { props.switchSubModel(modelContainer)}} style={modelContainer.getActiveState() === true ? {color: "#43a047", fontSize: 18} : {}}/>,
                 // <Icon type="close" onClick={() => {props.removeFile(modelContainer)}}/>
               ]}>
               {modelContainer.name}
