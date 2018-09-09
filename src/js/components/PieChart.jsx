@@ -24,7 +24,7 @@ class PieChart extends React.Component {
   }
   
   drawGraph(data) {
-    var svg = d3.select("#piechart").append("svg").attr("class", "pie-svg"),
+    var svg = d3.select("#piechart"+this.props.ident).append("svg").attr("class", "pie-svg"),
     width = Number(svg.style("width").split("px")[0]),
     height = Number(svg.style("height").split("px")[0]),
     radius = Math.min(width, height) / 2,
@@ -67,7 +67,7 @@ class PieChart extends React.Component {
   }
   
   updateGraph(data) {
-    d3.select("#piechart").select("svg").remove().exit();
+    d3.select("#piechart"+this.props.ident).select("svg").remove().exit();
     this.drawGraph(data);
     
   }
@@ -76,7 +76,7 @@ class PieChart extends React.Component {
     return (
       <Row>
       <Col>
-      <div id="piechart" className="piechart"></div>
+      <div id={"piechart"+this.props.ident} className="piechart"></div>
       </Col>
       </Row>
     );
@@ -84,7 +84,8 @@ class PieChart extends React.Component {
 }
 
 PieChart.propTypes = {
-  data : PropTypes.array
+  data : PropTypes.array,
+  ident : PropTypes.string
 };
 
 export default PieChart;

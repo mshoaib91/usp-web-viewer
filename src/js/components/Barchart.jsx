@@ -24,7 +24,7 @@ class BarChart extends React.Component {
   }
   
   drawGraph(data) {
-    var svg = d3.select("#barchart").append("svg").attr("class", "bar-svg");
+    var svg = d3.select("#barchart"+this.props.ident).append("svg").attr("class", "bar-svg");
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = Number(svg.style("width").split("px")[0]) - margin.left - margin.right,
     height = Number(svg.style("height").split("px")[0]) - margin.top - margin.bottom;
@@ -64,7 +64,7 @@ class BarChart extends React.Component {
   }
   
   updateGraph(data) {
-    d3.select("#barchart").select("svg").remove().exit();
+    d3.select("#barchart"+this.props.ident).select("svg").remove().exit();
     this.drawGraph(data);
     
   }
@@ -72,16 +72,17 @@ class BarChart extends React.Component {
   render () {
     return (
       <Row>
-      <Col>
-      <div id="barchart" className="barchart"></div>
-      </Col>
+        <Col>
+          <div id={"barchart"+this.props.ident} className="barchart"></div>
+        </Col>
       </Row>
     );
   }
 }
 
 BarChart.propTypes = {
-  data : PropTypes.array
+  data : PropTypes.array,
+  ident : PropTypes.string
 };
 
 export default BarChart;

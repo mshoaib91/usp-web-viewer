@@ -11,15 +11,41 @@ export const Dashboard = (props) => {
   const barchart = graphData ? graphData.barchart : [];
   return (
     <Row>
-      <Col>
+      <Col span={8}>
         <Row>
-          <Col>
-            <BarChart data={barchart} />
+          <Col span={24}>
+            <BarChart data={barchart} ident={"1"}/>
           </Col>
         </Row>
         <Row style={{marginTop:"20px"}}>
-          <Col>
-            <PieChart data={barchart} />
+          <Col span={24}>
+            <PieChart data={barchart} ident={"1"}/>
+          </Col>
+        </Row>
+      </Col>
+
+      <Col span={8}>
+        <Row>
+          <Col span={24}>
+            <BarChart data={barchart} ident={"2"}/>
+          </Col>
+        </Row>
+        <Row style={{marginTop:"20px"}}>
+          <Col span={24}>
+            <PieChart data={barchart} ident={"2"}/>
+          </Col>
+        </Row>
+      </Col>
+
+      <Col span={8}>
+        <Row>
+          <Col span={24}>
+            <BarChart data={barchart} ident={"3"}/>
+          </Col>
+        </Row>
+        <Row style={{marginTop:"20px"}}>
+          <Col span={24}>
+            <PieChart data={barchart} ident={"3"}/>
           </Col>
         </Row>
       </Col>

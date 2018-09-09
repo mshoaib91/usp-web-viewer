@@ -38,30 +38,28 @@ class SidePane extends React.Component {
 
   render() {
     return (
-      <div className="side-pane" style={{backgroundColor: config.colors.sidepanel_background}}>
-        <Row type="flex" justify="center">
-          <Col span={23}>
-            <Row type="flex" justify="center" className="gap">
-              <Col span={24}>
-              <ButtonGroup style={{float: 'right'}}>
-                <Button size="large" icon="dashboard" onClick={(event)=>{this.onMenuClick(MenuTypes.dashboard)}}/>
-                <Button size="large" icon="file-add" onClick={(event)=>{this.onMenuClick(MenuTypes.upload)}}/>
-              </ButtonGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-    {this.state.menu.upload ? 
-      (<FileComponent fileList={this.props.fileList} 
-      removeFile={this.props.removeFile} 
-      switchModel={this.props.switchModel}
-      switchSubModel={this.props.switchSubModel}/>)
-       : <Dashboard modelData={this.props.modelData} />}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </div>
+      <Row type="flex" justify="center" className="side-pane" style={{backgroundColor: config.colors.sidepanel_background}}>
+        <Col span={23}>
+          <Row type="flex" justify="center" className="gap">
+            <Col span={24}>
+            <ButtonGroup style={{float: 'right'}}>
+              <Button size="large" icon="dashboard" onClick={(event)=>{this.onMenuClick(MenuTypes.dashboard)}}/>
+              <Button size="large" icon="file-add" onClick={(event)=>{this.onMenuClick(MenuTypes.upload)}}/>
+            </ButtonGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+  {this.state.menu.upload ? 
+    (<FileComponent fileList={this.props.fileList} 
+    removeFile={this.props.removeFile} 
+    switchModel={this.props.switchModel}
+    switchSubModel={this.props.switchSubModel}/>)
+      : <Dashboard modelData={this.props.modelData} />}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     );
   }
 }
