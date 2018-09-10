@@ -3,26 +3,28 @@ import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import { GraphPane } from './GraphPane.jsx';
 
-
-
 export const Dashboard = (props) => {
-  const graphData = props.modelData ? props.modelData.GraphData : null;
-  const modelInfo = props.modelData && props.modelData.ModelInformation ? props.modelData.ModelInformation : {};
-  const barchart = graphData ? graphData.barchart : [];
+  const noModels = props.fileList.length;
+  const colSpan = 24/Number(noModels)
+  
   return (
     <Row>
-      <Col span={12}>
-        <GraphPane barchartData={barchart} piechartData={barchart} modelInfo={modelInfo} ident={'1'}/>
-      </Col>
-
-      <Col span={12}>
-        <GraphPane barchartData={barchart} piechartData={barchart} modelInfo={modelInfo} ident={'2'}/>
-      </Col>
+      {createPanes(props.fileList, colSpan, props.switchModel)}
     </Row>
   );
 }
 
+function createPanes (modelList, colSpan, switchModelHandler) {
+  return modelList.map((modelContainer, index) => {
+    return (
+      <Col key={index} span={colSpan}>
+        <GraphPane modelContainer={modelContainer} ident={'m'+index} switchModel={switchModelHandler} />
+      </Col>
+    );
+  });
+}
 
 Dashboard.propTypes = {
-  modelData : PropTypes.object
+  fileList : PropTypes.array,
+  switchModel : PropTypes.func
 }

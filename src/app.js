@@ -41,7 +41,6 @@ class App extends React.Component {
   }
   
   render() {
-    let modelData = this.state.activeModel ? this.state.activeModel.ModelData : {}
     return (
       <div style={{height: window.innerHeight}}>
         <Row style={{height: '100%'}}>
@@ -54,7 +53,6 @@ class App extends React.Component {
             removeFile={this.reactActions.removeFileFromList} 
             switchModel={this.reactActions.switchModel}
             switchSubModel={this.reactActions.switchSubModel}
-            modelData = {modelData}
             />
           </Col>
         </Row>
