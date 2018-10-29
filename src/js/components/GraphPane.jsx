@@ -11,8 +11,8 @@ export const GraphPane = (props) => {
   const modelContainer = props.modelContainer;
   const modelData = modelContainer.model.ModelData;
   const graphData = modelData ? modelData.GraphData : null;
-  const barchartData = graphData ? graphData.barchart : [];
-  const piechartData = graphData ? graphData.piechart : [];
+  // const barchartData = graphData ? graphData.barchart : [];
+  // const piechartData = graphData ? graphData.piechart : [];
   const modelInfo = modelData && modelData.ModelInformation ? modelData.ModelInformation : {};
   modelInfo['name'] = modelContainer.name
   const active = modelContainer.getActiveState();
@@ -26,19 +26,35 @@ export const GraphPane = (props) => {
           </Tooltip>
         </Col>
       </Row>
-      <Row>
-        <Col span={24}>
-          <BarChart data={barchartData} ident={props.ident}/>
-        </Col>
-      </Row>
-      <Row style={{marginTop:"20px"}}>
-        <Col span={24}>
-          <PieChart data={barchartData} ident={props.ident}/>
-        </Col>
-      </Row>
+      {listGraphs(graphData, props.ident)}
       </Col>
     </Row>
   )
+}
+
+function listGraphs (graphData, ident) {
+  if (graphData.length) {
+    let graphsJSX = graphData.map((e, index) => {
+      if (Object.keys(e)[0] === 'piechart') {
+        return (
+          <Row key={index}>
+            <Col span={24}>
+              <BarChart data={e.piechart} ident={ident + index}/>
+            </Col>
+          </Row>
+        )
+      } else if (Object.keys(e)[0] === 'barchart') {
+        return (
+          <Row key={index} style={{marginTop:"20px"}}>
+          <Col span={24}>
+            <PieChart data={e.barchart} ident={ident + index}/>
+          </Col>
+        </Row>
+        )
+      }
+    });
+    return graphsJSX;
+  }
 }
 
 GraphPane.propTypes = {
