@@ -82,6 +82,8 @@ function setNameAndMtls (obj, name) {
       el.material = el.material.map(mtl => {
         return new THREE.MeshPhongMaterial(mtl);
       });
+    } else {
+      el.material = new THREE.MeshPhongMaterial(el.material);
     }
   });
   return obj;

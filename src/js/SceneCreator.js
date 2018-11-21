@@ -144,7 +144,7 @@ class SceneCreator {
     if(activeModel !== undefined && activeModel !== null) {
       let intersects = this.raycaster.intersectObject(activeModel, true);
       if (intersects.length) {
-        if (this.intersected != intersects[0].object) {
+        if ( this.intersected != intersects[0].object) {
           if (this.intersected) {
             if (Array.isArray(this.intersected.material)) {
               this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
@@ -164,7 +164,7 @@ class SceneCreator {
         // get model details defined in *.info.json
         let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
         // if mouse hovers on the new Object3Dmodel object which is differenciated by id which is object's name
-        if(this.ReactActions.reactClass.state.modalWindow.id !== this.intersected.name) {
+        if(this.intersected && this.ReactActions.reactClass.state.modalWindow.id !== this.intersected.name) {
           const newWinOpions = new ModalWinOptions()
           .setId(this.intersected.name)
           .setText(this.intersected.name)

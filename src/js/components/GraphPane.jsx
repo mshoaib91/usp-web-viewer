@@ -33,7 +33,7 @@ export const GraphPane = (props) => {
 }
 
 function listGraphs (graphData, ident) {
-  if (graphData.length) {
+  if (graphData && graphData.length) {
     let graphsJSX = graphData.map((e, index) => {
       if (Object.keys(e)[0] === 'piechart') {
         return (

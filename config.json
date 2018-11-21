@@ -10,11 +10,11 @@
   "light" : {
     "ambient" : {
       "color" : "0xcccccc",
-      "intensity" : "0.4"
+      "intensity" : "0.9"
     },
     "point" : {
       "color" : "0xffffff",
-      "intensity" : "0.2"
+      "intensity" : "0.3"
     }
   },
   "camera" : {
