@@ -145,36 +145,47 @@ class SceneCreator {
       let intersects = this.raycaster.intersectObject(activeModel, true);
       if (intersects.length) {
         if ( this.intersected != intersects[0].object) {
+          // get model details defined in *.info.json
           if (this.intersected) {
-            if (Array.isArray(this.intersected.material)) {
-              this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
-            } else {
-              this.intersected.material.emissive.setHex(this.intersected.currentHex);
+            let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
+            if (modelDetails) {
+              if (Array.isArray(this.intersected.material)) {
+                this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
+              } else {
+                this.intersected.material.emissive.setHex(this.intersected.currentHex);
+              }
             }
           }
           this.intersected = intersects[0].object;
-          if (Array.isArray(this.intersected.material)) {       // some models materials are array and some are object. this condition handle respectively
-            this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
-            this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
-          } else {
-            this.intersected.currentHex = this.intersected.material.emissive.getHex();
-            this.intersected.material.emissive.setHex(0xff0000);
+          let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
+          if (modelDetails) {
+            if (Array.isArray(this.intersected.material)) {       // some models materials are array and some are object. this condition handle respectively
+              this.intersected.currentHex = this.intersected.material[0].emissive.getHex();
+              this.intersected.material.forEach(e => e.emissive.setHex(0xff0000));
+            } else {
+              this.intersected.currentHex = this.intersected.material.emissive.getHex();
+              this.intersected.material.emissive.setHex(0xff0000);
+            }
           }
         } 
-        // get model details defined in *.info.json
-        let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
         // if mouse hovers on the new Object3Dmodel object which is differenciated by id which is object's name
         if(this.intersected && this.ReactActions.reactClass.state.modalWindow.id !== this.intersected.name) {
-          const newWinOpions = new ModalWinOptions()
-          .setId(this.intersected.name)
-          .setText(this.intersected.name)
-          .setDetails(modelDetails)
-          .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
-          .setVisibility(true);
-          this.ReactActions.modalStateSetter(newWinOpions);
+          let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
+          if (modelDetails) {
+            const newWinOpions = new ModalWinOptions()
+            .setId(this.intersected.name)
+            .setText(this.intersected.name)
+            .setDetails(modelDetails)
+            .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
+            .setVisibility(true);
+            this.ReactActions.modalStateSetter(newWinOpions);
+          } else {
+            this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false));
+          }
         }
 
-      } else { // turn back color to default
+      } else { 
+        // turn back color to default
         if (this.intersected) {
           if (Array.isArray(this.intersected.material)) {
             this.intersected.material.forEach(e => e.emissive.setHex(this.intersected.currentHex));
