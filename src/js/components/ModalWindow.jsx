@@ -27,16 +27,17 @@ class ModalWindow extends React.Component {
         top : options.position.y,
         right : options.position.x
       }}>
-        <h4>Details:</h4>
-        <h6>{options.text}</h6>
-        <p>length : {options.details.len}</p>
-        <p>width : {options.details.width}</p>
-        <p>height : {options.details.height}</p>
-        <p>area : {options.details.area}</p>
-
-
+        {this.detailsWindow(options.details)}
       </div>
     )
+  }
+
+  detailsWindow (detailsObj) {
+    let dom = [];
+    for (var key in detailsObj) {
+      dom.push(<p key={key}>{key} : {detailsObj[key]}</p>);
+    }
+    return dom;
   }
 }
 
