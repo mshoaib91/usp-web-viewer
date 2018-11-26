@@ -32,21 +32,21 @@ export const GraphPane = (props) => {
 function listGraphs (graphData, ident) {
   if (graphData && graphData.length) {
     let graphsJSX = graphData.map((e, index) => {
-      if (Object.keys(e)[0] === 'piechart') {
+      if (Object.keys(e).includes('piechart')) {
         return (
           <Row key={index}>
             <Col span={24}>
               <BarChart data={e.piechart} ident={ident + index}/>
-              <h6>{e.label ? e.label : ''}</h6>
+              <h6 className="graph-label">{e.label ? e.label : ''}</h6>
             </Col>
           </Row>
         )
-      } else if (Object.keys(e)[0] === 'barchart') {
+      } else if (Object.keys(e).includes('barchart')) {
         return (
           <Row key={index} style={{marginTop:"20px"}}>
           <Col span={24}>
             <PieChart data={e.barchart} ident={ident + index}/>
-            <h6>{e.label ? e.label : ''}</h6>
+            <h6 className="graph-label">{e.label ? e.label : ''}</h6>
           </Col>
         </Row>
         )
