@@ -75,9 +75,9 @@ class PieChart extends React.Component {
   render () {
     return (
       <Row>
-      <Col>
-      <div id={"piechart"+this.props.ident} className="piechart"></div>
-      </Col>
+        <Col>
+          <div id={"piechart"+this.props.ident} className="piechart"></div>
+        </Col>
       </Row>
     );
   }

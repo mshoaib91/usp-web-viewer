@@ -3,6 +3,7 @@ import { Col, Row, Icon, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import BarChart from './BarChart.jsx';
 import PieChart from './PieChart.jsx';
+import Tag from './Tag.jsx'
 
 import '../../sass/graphPane.scss';
 
@@ -19,7 +20,7 @@ export const GraphPane = (props) => {
       <Row type='flex' justify='center' >
         <Col span={3}>
           <Tooltip placement='top' title={modelInfo.name}>
-            <span><Icon className='tagicon' type="down-circle" theme="twoTone" twoToneColor={active ? '' : '#acacac'}  onClick={() => props.switchModel(modelContainer)}/></span>
+            <span><Icon className='tagicon' type="bank" theme="twoTone" twoToneColor={active ? '' : '#acacac'}  onClick={() => props.switchModel(modelContainer)}/></span>
           </Tooltip>
         </Col>
       </Row>
@@ -44,11 +45,20 @@ function listGraphs (graphData, ident) {
       } else if (Object.keys(e).includes('barchart')) {
         return (
           <Row key={index} style={{marginTop:"20px"}}>
-          <Col span={24}>
-            <PieChart data={e.barchart} ident={ident + index}/>
-            <h6 className="graph-label">{e.label ? e.label : ''}</h6>
-          </Col>
-        </Row>
+            <Col span={24}>
+              <PieChart data={e.barchart} ident={ident + index}/>
+              <h6 className="graph-label">{e.label ? e.label : ''}</h6>
+            </Col>
+          </Row>
+        )
+      } else if (Object.keys(e).includes('tag')) {
+        return (
+          <Row key={index} style={{marginTop:"20px"}}>
+            <Col span={24}>
+              <Tag data={e.tag}/>
+              <h6 className="graph-label">{e.label ? e.label : ''}</h6>
+            </Col>
+          </Row>
         )
       }
     });
