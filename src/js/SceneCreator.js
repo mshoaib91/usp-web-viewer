@@ -34,7 +34,9 @@ class SceneCreator {
     this.scene.background = new THREE.Color(Number(config.colors.scene_background));
     this.viewerWidth = threeElement.clientWidth;
     this.viewerHeight = threeElement.clientHeight;
-    this.ReactActions = ReactActionsObject    // injected react actions
+    this.ReactActions = ReactActionsObject;   // injected react actions
+    this.modalTimeout = null;                 // this holds the timeout delay of modal window visibility
+    this.newModalWindow = null;               // reference to modal window which will be shown after modalTimeout executes
     
     // Event Listeners
     document.addEventListener('mousemove', (e)=>{this.onDocumentMouseMove(e);}, false);
@@ -42,6 +44,8 @@ class SceneCreator {
     
     window.myscene = this.scene;  //todo : remove this
     window.myclass = this;        // todo : remove this
+
+    this.timeoutFunction = this.timeoutFunction.bind(this);
   }
   
   onDocumentMouseMove(event) {
@@ -172,15 +176,22 @@ class SceneCreator {
         if(this.intersected && this.ReactActions.reactClass.state.modalWindow.id !== this.intersected.name) {
           let modelDetails = activeModel.ModelData !== null ? activeModel.ModelData.ModelDetails[this.intersected.name] : null;
           if (modelDetails) {
+            if(this.modalTimeout) {
+              clearTimeout(this.modalTimeout);
+            }
             const newWinOpions = new ModalWinOptions()
             .setId(this.intersected.name)
             .setText(this.intersected.name)
             .setDetails(modelDetails)
-            .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y)
-            .setVisibility(true);
+            .setPosition(window.innerWidth - this.mouseClient.x, this.mouseClient.y);
+            this.newModalWindow = newWinOpions;
+            this.modalTimeout = setTimeout(this.timeoutFunction, 500);
             this.ReactActions.modalStateSetter(newWinOpions);
           } else {
             this.ReactActions.modalStateSetter(new ModalWinOptions().setVisibility(false));
+            if(this.modalTimeout) {
+              clearTimeout(this.modalTimeout);
+            }
           }
         }
 
@@ -199,6 +210,11 @@ class SceneCreator {
     }
      /** render scene */
      this.renderer.render(this.scene, this.camera);
+  }
+
+  timeoutFunction () {
+    this.ReactActions.reactClass.state.modalWindow.setVisibility(true);
+    this.ReactActions.modalStateSetter(this.ReactActions.reactClass.state.modalWindow);
   }
   
 }

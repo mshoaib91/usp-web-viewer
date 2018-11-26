@@ -16,10 +16,10 @@ export default class ReactActions {
    * @param {object} modalObj - Object of type ModalWinOptions.js
    */
   modalStateSetter(modalObj) {
-    if(!(this.reactClass.state.modalWindow.visible === false && modalObj.visible === false)) {
+    //if(!(this.reactClass.state.modalWindow.visible === false && modalObj.visible === false)) {
       let modalState = {...this.reactClass.state, modalWindow : modalObj};
       this.reactClass.setState(modalState);
-    }
+    //}
   }
 
   /**
