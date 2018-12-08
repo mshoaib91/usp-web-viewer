@@ -24,9 +24,9 @@ class FileProcessor {
       return contentFiles;
     })
     .then((contentFiles) => {
-      const regexp = /(\.zip)$/g
+      const regexp = /(\.zip)$/;
       const zipFiles = contentFiles.filter((file) => {
-        return regexp.test(file.name);
+        return regexp.test(file.name.trim());
       });
       this.contentFiles = contentFiles;
       return zipFiles;
