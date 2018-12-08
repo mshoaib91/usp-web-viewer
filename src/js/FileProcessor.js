@@ -8,11 +8,61 @@ import { ModelLoaderStructure } from './ModelLoader';
  * extract the obj file from it and return it
  */
 class FileProcessor {
-  
+
+  readZipProject(zipFile) {
+    let zip = new JSZip();
+    return this.readFile(zipFile)
+    .then((buffer) => {
+      return zip.loadAsync(buffer);
+    })
+    .then((zipContents) => {
+      console.log(zipContents);
+      const contents = zipContents.files;
+      const contentFiles = Object.values(contents).filter((f) => {
+        return !f.dir
+      });
+      return contentFiles;
+    })
+    .then((contentFiles) => {
+      const regexp = /(\.zip)$/g
+      const zipFiles = contentFiles.filter((file) => {
+        return regexp.test(file.name);
+      });
+      this.contentFiles = contentFiles;
+      return zipFiles;
+    })
+    .then((zipFiles) => {
+      const promiseArray = [];
+      zipFiles.forEach(file => {
+        promiseArray.push(file.async("arraybuffer"));
+      });
+      return Promise.all(promiseArray);
+    })
+    .then((zipFiles) => {
+      if(zipFiles.length) {   // if there are zip files inside main zip file
+        let promiseArray = [];
+        zipFiles.forEach(file => {
+          let promise = this.readZip(file);
+          promiseArray.push(promise);
+        });
+        return Promise.all(promiseArray);
+      } else if(this.contentFiles && this.contentFiles.length) {    // there are files but no zips so read normally as one file
+        var files = [];
+        return this.readZip(zipFile)
+        .then((modelLoaderStruct) => {
+          files.push(modelLoaderStruct);
+          return files;
+        });
+      } else {
+        throw new Error("seems like zip is empty");
+      }
+    })
+  }
+
   /**
    * Reads a zip file and get .Obj files from it
    * @param {File} zipFile
-   * @returns {Promise<ArrayBuffer[]>}
+   * @returns {Promise<ModelLoaderStructure[]>}
    */
   readZip(zipFile) {
     let zip = new JSZip();
@@ -21,23 +71,27 @@ class FileProcessor {
       return zip.loadAsync(buffer)
     })
     .then((zipContents) => {
+      const contents = zipContents.files;
+      const contentFiles = Object.values(contents).filter((f) => {
+        return !f.dir
+      });
       let promiseArray = [];
       //let nameArray = new Array(3);
       let files = {}
-      for (var file in zipContents.files) {
-        if(file.match((/\.obj\b/)) !== null) {
-          var arrayPos = promiseArray.push(zip.file(file).async("arraybuffer"));
-          const name = file.split('.obj')[0];
+      for (var file of contentFiles) {
+        if(file.name.match((/\.obj\b/)) !== null) {
+          var arrayPos = promiseArray.push(zip.file(file.name).async("arraybuffer"));
+          const name = file.name.split('.obj')[0];
           this.addFiles(files, name, 'obj', arrayPos - 1);
         }
-        else if(file.match(/\.mtl\b/) !== null) {
-          var arrayPos = promiseArray.push(zip.file(file).async("arraybuffer"));
-          const name = file.split('.mtl')[0];
+        else if(file.name.match(/\.mtl\b/) !== null) {
+          var arrayPos = promiseArray.push(zip.file(file.name).async("arraybuffer"));
+          const name = file.name.split('.mtl')[0];
           this.addFiles(files, name, 'mtl', arrayPos - 1);
         }
-        else if (file.match(/(\.info\.json){1}$/) !== null) {
-          var arrayPos = promiseArray.push(zip.file(file).async("string"));
-          const name = file.split('.info.json')[0];
+        else if (file.name.match(/(\.info\.json){1}$/) !== null) {
+          var arrayPos = promiseArray.push(zip.file(file.name).async("string"));
+          const name = file.name.split('.info.json')[0];
           this.addFiles(files, name, 'info', arrayPos - 1);
         }
       }
@@ -102,11 +156,15 @@ class FileProcessor {
    */
   readFile(file) {
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onloadend = (evt) => {
-        let buffer = evt.target.result;
-        resolve(buffer);
+      if (file.constructor.name === "ArrayBuffer") {
+        resolve(file);
+      } else {
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = (evt) => {
+          let buffer = evt.target.result;
+          resolve(buffer);
+        }
       }
     });
   }

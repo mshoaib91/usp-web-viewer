@@ -11,9 +11,12 @@ const DraggerProps = {
   showUploadList: false,
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
-    fileProcessor.readZip(file)
+    //fileProcessor.readZip(file)
+    fileProcessor.readZipProject(file)
     .then(zipContents => {
-      loadModels(zipContents);
+      zipContents.forEach(models => {
+        loadModels(models);
+      });
     })
     .catch(ex => console.error(ex));
     return false;
