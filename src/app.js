@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
 import SidePane from './js/components/SidePane.jsx';
 import ModalWindow from './js/components/ModalWindow.jsx';
+import LayerBox from './js/components/LayerBox.jsx';
 
 // css import
 import 'antd/dist/antd.css';
@@ -56,7 +57,9 @@ class App extends React.Component {
             />
           </Col>
         </Row>
+        {/* this modal window has absolute position css property */}
         <ModalWindow modalOptions={this.state.modalWindow}/>
+        <LayerBox fileList={this.state.fileList} switchSubModel={this.reactActions.switchSubModel}/>
       </div>
     );
   }
