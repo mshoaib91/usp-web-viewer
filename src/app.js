@@ -5,6 +5,7 @@ import {Row, Col} from 'antd';
 import SidePane from './js/components/SidePane.jsx';
 import ModalWindow from './js/components/ModalWindow.jsx';
 import LayerBox from './js/components/LayerBox.jsx';
+import config from '../config.json';
 
 // css import
 import 'antd/dist/antd.css';
@@ -49,7 +50,7 @@ class App extends React.Component {
             <div className='usp-model' ref={element => this.threeRootElement = element}>
             </div>
           </Col>
-          <Col span={6} className='settings-panel'>
+          <Col span={6} className='settings-panel'style={{backgroundColor: config.colors.sidepanel_background}}>
             <SidePane fileList={this.state.fileList} 
             removeFile={this.reactActions.removeFileFromList} 
             switchModel={this.reactActions.switchModel}
@@ -59,6 +60,7 @@ class App extends React.Component {
         </Row>
         {/* this modal window has absolute position css property */}
         <ModalWindow modalOptions={this.state.modalWindow}/>
+        {/* Layerbox is also position absolute on the top left corner */}
         <LayerBox fileList={this.state.fileList} switchSubModel={this.reactActions.switchSubModel}/>
       </div>
     );

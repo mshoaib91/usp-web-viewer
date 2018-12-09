@@ -5,7 +5,7 @@ import { GraphPane } from './GraphPane.jsx';
 
 export const Dashboard = (props) => {
   const noModels = props.fileList.length;
-  const colSpan = 24/Number(noModels)
+  const colSpan = Math.floor(24/Number(noModels));
   
   return (
     <Row>
