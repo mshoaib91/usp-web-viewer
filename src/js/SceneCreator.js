@@ -118,6 +118,7 @@ class SceneCreator {
     var oc = new OC(this.camera, this.container);
     oc.minPolarAngle = 0 - (Math.PI/2);
     oc.maxPolarAngle = 0 + (Math.PI/2);
+    oc.enablePan = false;
   }
   
   LoadModel(fileName) {
