@@ -46,18 +46,18 @@ class App extends React.Component {
     return (
       <div style={{height: window.innerHeight}}>
         <Row style={{height: '100%'}}>
-          <Col span={18} style={{height: '100%'}}>
+          <Col span={24} style={{height: '100%'}}>
             <div className='usp-model' ref={element => this.threeRootElement = element}>
             </div>
           </Col>
-          <Col span={6} className='settings-panel'style={{backgroundColor: config.colors.sidepanel_background}}>
+        </Row>
+        <div className='settings-panel'style={{backgroundColor: config.colors.sidepanel_background, width: '350px', position: 'absolute', top: '0', right:'0', opacity:'0.7'}}>
             <SidePane fileList={this.state.fileList} 
             removeFile={this.reactActions.removeFileFromList} 
             switchModel={this.reactActions.switchModel}
             switchSubModel={this.reactActions.switchSubModel}
             />
-          </Col>
-        </Row>
+          </div>
         {/* this modal window has absolute position css property */}
         <ModalWindow modalOptions={this.state.modalWindow}/>
         {/* Layerbox is also position absolute on the top left corner */}
