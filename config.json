@@ -9,7 +9,7 @@
   },
   "light" : {
     "ambient" : {
-      "color" : "0xcccccc",
+      "color" : "0x999999",
       "intensity" : "0.9"
     },
     "point" : {
