@@ -10,7 +10,7 @@ export default class ModelContainer {
    * @param {object} modelReference - Object3D object 
    */
   constructor(name, modelReference) {
-    this.name = name;
+    this.name = name.split('/').pop().replace('_main_group', '');
     this.model = modelReference;
     this.active = true;
     this.submodels = [];
