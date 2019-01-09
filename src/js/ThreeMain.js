@@ -1,6 +1,7 @@
 /** created by shoaib khan on 30.4.2018 */
 import SceneCreator from './SceneCreator';
 import APIService from './APIService';
+import FileProcessor from './FileProcessor';
 import configs from '../../config.json';
 import objDetails from '../../objexamples/sample_rot_main.info.json';
 import { loadModels, ModelLoaderStructure } from './ModelLoader';
@@ -19,8 +20,15 @@ export default function (threeElement, reactStateActions) {
   const modelPromise = apiService.getModelFromServer();
   if(modelPromise) {
     modelPromise
-    .then((blob) => {
-      console.log(blob);
+    .then((file) => {
+      let fileProcessor = new FileProcessor();
+      fileProcessor.readZipProject(file)
+      .then(zipContents => {
+        zipContents.forEach(models => {
+          loadModels(models);
+        });
+      })
+      .catch(ex => console.error(ex));
     }).catch(e => {
       console.error(e);
     });

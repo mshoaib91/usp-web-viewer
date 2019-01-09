@@ -5,7 +5,7 @@ To realise the theory, Urban Strategy Playground; a research group which aims to
 The main objective of this project is to realise such tool on the web platform using latest web technologies such as WebGL to display and manipulate 3D models on the web browsers and ReactJS to create fast and smooth web interface to let people analyse the strategy plans on the internet without installing an application in their devices.
 
 ## Live Demo
-[USP Web Viewer](https://usp-web-viewer.herokuapp.com/)
+[USP Web Viewer](https://usp-web-viewer.herokuapp.com/?model=objexamples/Project.zip)
 
 ## Local setup for development
 
@@ -51,3 +51,10 @@ Infact the node server _(src/server.js)_ is just a static server that hosts `ind
 
 If you want to use the server of your choice then just serve this project from the server's `public` folder and implement RESTful api and persistency layer of your choice.
 
+
+## How it works
+
+To load models either drop models into the drag and drop box in the dashboard from objexamples folder.
+Alternatively we can provide query parameter pointing to the file in the source directory. 
+
+for example: `/?model=objexamples/Project.zip`

@@ -11,7 +11,6 @@ const DraggerProps = {
   showUploadList: false,
   beforeUpload(file) {
     let fileProcessor = new FileProcessor();
-    //fileProcessor.readZip(file)
     fileProcessor.readZipProject(file)
     .then(zipContents => {
       zipContents.forEach(models => {
