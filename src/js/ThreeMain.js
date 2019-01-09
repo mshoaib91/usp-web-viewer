@@ -16,9 +16,18 @@ export default function (threeElement, reactStateActions) {
   sc.setLighting();
   sc.addCameraToscene();
   let name = 'default_main';
-  apiService.getModelFromServer();
-  let modelLoaderStructure = new ModelLoaderStructure(name, configs.paths.defaultObj, configs.paths.defaultMtl, objDetails);
-  loadModels([modelLoaderStructure]);
+  const modelPromise = apiService.getModelFromServer();
+  if(modelPromise) {
+    modelPromise
+    .then((blob) => {
+      console.log(blob);
+    }).catch(e => {
+      console.error(e);
+    });
+  } else {
+    let modelLoaderStructure = new ModelLoaderStructure(name, configs.paths.defaultObj, configs.paths.defaultMtl, objDetails);
+    loadModels([modelLoaderStructure]);
+  }
   sc.addControls();
   sc.initRender();
   
