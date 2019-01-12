@@ -9,16 +9,27 @@ export const Dashboard = (props) => {
   
   return (
     <Row>
-      {createPanes(props.fileList, colSpan, props.switchModel)}
+      {/* {createPanes(props.fileList, colSpan, props.switchModel)} */}
+      <Panes fileList={props.fileList} colSpan={colSpan} switchModel={props.switchModel}/>
     </Row>
   );
 }
 
-function createPanes (modelList, colSpan, switchModelHandler) {
-  return modelList.map((modelContainer, index) => {
+// function createPanes (modelList, colSpan, switchModelHandler) {
+//   return modelList.map((modelContainer, index) => {
+//     return (
+//       <Col key={index} span={colSpan}>
+//         <GraphPane modelContainer={modelContainer} ident={'m'+index} switchModel={switchModelHandler} />
+//       </Col>
+//     );
+//   });
+// }
+
+const Panes = (props) => {
+  return props.fileList.map((modelContainer, index) => {
     return (
-      <Col key={index} span={colSpan}>
-        <GraphPane modelContainer={modelContainer} ident={'m'+index} switchModel={switchModelHandler} />
+      <Col key={index} span={props.colSpan}>
+        <GraphPane modelContainer={modelContainer} ident={'m'+index} switchModel={props.switchModel} parentColSpan={props.colSpan} />
       </Col>
     );
   });
@@ -27,4 +38,10 @@ function createPanes (modelList, colSpan, switchModelHandler) {
 Dashboard.propTypes = {
   fileList : PropTypes.array,
   switchModel : PropTypes.func
+}
+
+Panes.propTypes = {
+  fileList: PropTypes.array,
+  colSpan: PropTypes.number,
+  switchModel: PropTypes.func
 }

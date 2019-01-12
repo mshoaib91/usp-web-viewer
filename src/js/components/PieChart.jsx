@@ -11,11 +11,12 @@ class PieChart extends React.Component {
     console.log("PieChart data", props.data);
   }
   
-  shouldComponentUpdate({data}) {
-    return (data.length !== this.props.data.length);
+  shouldComponentUpdate({data, rand, ident}) {
+    return (data.length !== this.props.data.length || (ident === this.props.ident && rand !== this.props.rand));
   }
   
   componentDidUpdate() {
+    console.log('updated!!!!!');
     this.updateGraph(this.props.data);
   }
   
@@ -85,7 +86,8 @@ class PieChart extends React.Component {
 
 PieChart.propTypes = {
   data : PropTypes.array,
-  ident : PropTypes.string
+  ident : PropTypes.string,
+  rand : PropTypes.number
 };
 
 export default PieChart;

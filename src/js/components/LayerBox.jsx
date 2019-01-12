@@ -29,8 +29,8 @@ class LayerBox extends React.Component {
             (
               <div>
               {
-                activeModel.submodels.map((model) => (
-                  <p>
+                activeModel.submodels.map((model, index) => (
+                  <div key={index}>
                     <Row>
                       <Col span={4}>
                       <Checkbox checked={model.active} onChange={this.switchModelHandler(model)}/>
@@ -39,7 +39,7 @@ class LayerBox extends React.Component {
                         {model.name}
                       </Col>
                     </Row>
-                  </p>
+                  </div>
                 ))
               }
             </div>

@@ -24,20 +24,23 @@ export const GraphPane = (props) => {
           </Tooltip>
         </Col>
       </Row>
-      {listGraphs(graphData, props.ident)}
+      {listGraphs(graphData, props.ident, props.parentColSpan)}
       </Col>
     </Row>
   )
 }
 
-function listGraphs (graphData, ident) {
+/**
+ * ParentColSpan is introduced so that d3 graph only updates when parent column span changes
+ */
+function listGraphs (graphData, ident, parentColSpan) {
   if (graphData && graphData.length) {
     let graphsJSX = graphData.map((e, index) => {
       if (Object.keys(e).includes('piechart')) {
         return (
           <Row key={index}>
             <Col span={24}>
-              <BarChart data={e.piechart} ident={ident + index}/>
+              <BarChart data={e.piechart} ident={ident + index} rand={parentColSpan}/>
               <h6 className="graph-label">{e.label ? e.label : ''}</h6>
             </Col>
           </Row>
@@ -46,7 +49,7 @@ function listGraphs (graphData, ident) {
         return (
           <Row key={index} style={{marginTop:"20px"}}>
             <Col span={24}>
-              <PieChart data={e.barchart} ident={ident + index}/>
+              <PieChart data={e.barchart} ident={ident + index} rand={parentColSpan}/>
               <h6 className="graph-label">{e.label ? e.label : ''}</h6>
             </Col>
           </Row>
@@ -69,5 +72,6 @@ function listGraphs (graphData, ident) {
 GraphPane.propTypes = {
   modelContainer : PropTypes.object,
   ident : PropTypes.string,
-  switchModel : PropTypes.func
+  switchModel : PropTypes.func,
+  parentColSpan : PropTypes.number 
 }

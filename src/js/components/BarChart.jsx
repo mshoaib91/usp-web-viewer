@@ -11,8 +11,8 @@ class BarChart extends React.Component {
     console.log("barchart data", props.data);
   }
   
-  shouldComponentUpdate({data}) {
-    return (data.length !== this.props.data.length);
+  shouldComponentUpdate({data, ident, rand}) {
+    return (data.length !== this.props.data.length || (ident === this.props.ident && rand !== this.props.rand));
   }
   
   componentDidUpdate() {
@@ -82,7 +82,8 @@ class BarChart extends React.Component {
 
 BarChart.propTypes = {
   data : PropTypes.array,
-  ident : PropTypes.string
+  ident : PropTypes.string,
+  rand : PropTypes.number
 };
 
 export default BarChart;
