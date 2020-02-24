@@ -66,7 +66,7 @@ class SceneCreator {
   
   setCamera() {
     this.camera = new THREE.PerspectiveCamera(Number(config.camera.fov), this.viewerWidth / this.viewerHeight, Number(config.camera.near), Number(config.camera.far));
-    this.camera.position.z = 250;
+    this.camera.position.z = 550;
   }
   
   setLighting() {
